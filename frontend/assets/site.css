@@ -119,7 +119,23 @@ h1,h2,h3 { letter-spacing: -.01em; margin: 0; }
 .nav-link:hover { color: var(--green-primary); background: rgba(10, 94, 58, 0.05); text-decoration: none; }
 .nav-link.current { color: var(--green-primary); }
 .nav-link i, .nav-link svg { width: 13px; height: 13px; opacity: .75; transition: transform .18s ease; }
+.nav-item { position: relative; display: inline-flex; align-items: center; }
 .nav-item:hover .nav-link i, .nav-item:hover .nav-link svg { transform: rotate(180deg); }
+
+/* dropdown mega */
+.nav-drop { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(8px);
+  background: var(--white); border-radius: var(--radius-card); box-shadow: var(--shadow-card), 0 12px 30px rgba(0,0,0,.10);
+  padding: 14px; min-width: 460px; opacity: 0; visibility: hidden; transition: all .18s ease; z-index: 70; pointer-events: none; }
+.nav-item:hover .nav-drop, .nav-drop:hover { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(2px); pointer-events: auto; }
+.nav-drop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.nav-drop a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px;
+  color: var(--text-strong); font-size: 14px; font-weight: 600; text-decoration: none; }
+.nav-drop a:hover { background: var(--canvas); text-decoration: none; }
+.nav-drop a .ic { width: 32px; height: 32px; flex: 0 0 32px; border-radius: 50%; background: var(--lime-soft);
+  display: flex; align-items: center; justify-content: center; }
+.nav-drop a .ic i, .nav-drop a .ic svg { width: 17px; height: 17px; color: var(--green-primary); }
+.nav-drop a small { display: block; font-weight: 500; color: var(--text-soft); font-size: 12px; }
+
 .nav-spacer { flex: 1 1 auto; min-width: 12px; }
 
 /* right action controls */
