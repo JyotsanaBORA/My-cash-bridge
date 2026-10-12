@@ -601,6 +601,7 @@
       '<a class="nav-tel" href="tel:' + CFG.phoneRaw + '"><i data-lucide="phone-call"></i> ' + CFG.phone + '</a>' +
       '<button class="btn btn-filled btn-sm" data-apply data-i18n="nav.apply">Apply now</button>' +
       '<button class="btn btn-outline btn-sm nav-download-btn" id="cbNavReferBtn"><i data-lucide="share-2"></i> Refer Now</button>' +
+      '<button class="btn btn-outline btn-sm nav-agent-btn" id="cbNavAgentBtn"><i data-lucide="briefcase"></i> Become an Agent</button>' +
       '<button class="hamburger" aria-label="Menu" data-drawer-open><i data-lucide="menu"></i></button>' +
     '</div></header>' + drawerHTML();
   }
@@ -625,6 +626,7 @@
       '<div class="drawer-group"><a href="' + BASE + 'pages/contact.html">Contact Us</a></div>' +
       '<div style="margin-top:18px;display:flex;flex-direction:column;gap:10px">' +
         '<button class="btn btn-filled btn-block" data-apply>Apply now</button>' +
+        '<button class="btn btn-outline btn-block" id="cbDrawerAgentBtn"><i data-lucide="briefcase"></i> Become an Agent</button>' +
         '<a class="btn btn-outline btn-block" href="tel:' + CFG.phoneRaw + '"><i data-lucide="phone-call"></i> ' + CFG.phone + '</a>' +
       '</div></div></div>';
   }
@@ -836,6 +838,81 @@
     '</div>';
   }
 
+  /* ============================================================
+     BECOME LOAN AGENT MODAL
+     ============================================================ */
+  function agentModalHTML() {
+    return '<div class="modal" id="agentModal" role="dialog" aria-modal="true">' +
+      '<div class="modal-scrim" id="agentModalScrim"></div>' +
+      '<div class="modal-box" style="max-width:520px;max-height:90vh;overflow-y:auto">' +
+        '<button class="modal-close" id="agentModalClose"><i data-lucide="x"></i></button>' +
+        '<div style="text-align:center;margin-bottom:18px">' +
+          '<div style="background:var(--brand-lime,#9AEF5E);width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">' +
+            '<i data-lucide="briefcase" style="width:26px;height:26px;color:var(--green-deep,#073d27)"></i>' +
+          '</div>' +
+          '<h3 style="font-size:22px;font-weight:800;color:var(--green-primary,#0c7a4e);margin:0 0 6px">Become a Loan Agent</h3>' +
+          '<p style="font-size:13.5px;color:var(--text-soft,#5a6472);margin:0">Partner with MyCashBridge &amp; earn top commissions across 128+ lenders.</p>' +
+        '</div>' +
+        '<form id="agentForm" novalidate>' +
+          '<input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">' +
+          '<div style="display:flex;flex-direction:column;gap:12px">' +
+            '<div><label style="font-size:13px;font-weight:700;display:block;margin-bottom:4px">Full Name *</label>' +
+              '<input name="agentName" type="text" placeholder="e.g. Rahul Sharma" required style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box">' +
+            '</div>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
+              '<div><label style="font-size:13px;font-weight:700;display:block;margin-bottom:4px">Mobile Number *</label>' +
+                '<input name="agentMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile" required style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box">' +
+              '</div>' +
+              '<div><label style="font-size:13px;font-weight:700;display:block;margin-bottom:4px">Email Address *</label>' +
+                '<input name="agentEmail" type="email" placeholder="e.g. rahul@example.com" required style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box">' +
+              '</div>' +
+            '</div>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
+              '<div><label style="font-size:13px;font-weight:700;display:block;margin-bottom:4px">City / Location *</label>' +
+                '<input name="agentCity" type="text" placeholder="e.g. Mumbai, Delhi" required style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box">' +
+              '</div>' +
+              '<div><label style="font-size:13px;font-weight:700;display:block;margin-bottom:4px">Profile / Background</label>' +
+                '<select name="agentType" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;background:#fff">' +
+                  '<option value="Direct Selling Agent (DSA)">Direct Selling Agent (DSA)</option>' +
+                  '<option value="Loan Consultant / Financial Advisor">Loan Consultant / Advisor</option>' +
+                  '<option value="Ex-Banker">Ex-Banker</option>' +
+                  '<option value="Individual / Beginner">Individual / Beginner</option>' +
+                '</select>' +
+              '</div>' +
+            '</div>' +
+            '<div style="background:#f8faf8;border:1.5px solid #e2ebe4;border-radius:10px;padding:12px 14px">' +
+              '<label style="font-size:13px;font-weight:700;display:block;margin-bottom:6px;color:var(--green-primary,#0c7a4e)">Check Available Documents:</label>' +
+              '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">' +
+                '<label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" name="agentDocs" value="PAN Card" checked> PAN Card</label>' +
+                '<label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" name="agentDocs" value="Aadhaar Card" checked> Aadhaar Card</label>' +
+                '<label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" name="agentDocs" value="Bank Statement / Income Proof"> Bank Statements</label>' +
+                '<label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" name="agentDocs" value="GST / Business Registration"> GST / Reg. Proof</label>' +
+              '</div>' +
+              '<span style="display:block;font-size:11px;color:#777;margin-top:6px">You will be requested to share these during verification.</span>' +
+            '</div>' +
+            '<label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text-soft,#5a6472);cursor:pointer;margin-top:4px">' +
+              '<input type="checkbox" name="agentConsent" required checked style="margin-top:2px">' +
+              '<span>I authorize MyCashBridge to contact me regarding my partner application. I agree to the <a href="' + BASE + 'pages/terms.html" target="_blank" style="color:var(--green-primary,#0c7a4e);text-decoration:underline">Terms</a> and <a href="' + BASE + 'pages/privacy-policy.html" target="_blank" style="color:var(--green-primary,#0c7a4e);text-decoration:underline">Privacy Policy</a>.</span>' +
+            '</label>' +
+          '</div>' +
+          '<div id="agentError" style="display:none;color:#d32f2f;font-size:13px;margin-top:10px;font-weight:600;text-align:center"></div>' +
+          '<button type="submit" id="agentSubmitBtn" style="width:100%;margin-top:16px;padding:13px;background:var(--green-primary,#0c7a4e);color:#fff;border:none;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px">' +
+            '<i data-lucide="send"></i> <span class="btn-text">Submit Application</span>' +
+          '</button>' +
+        '</form>' +
+        '<div id="agentThanks" style="display:none;text-align:center;padding:20px 10px">' +
+          '<div style="font-size:44px;margin-bottom:10px">\uD83C\uDF89</div>' +
+          '<h4 style="font-size:20px;font-weight:800;color:var(--green-primary,#0c7a4e);margin:0 0 8px">Application Received!</h4>' +
+          '<p style="font-size:14px;color:var(--text-soft,#5a6472);margin:0 0 14px;line-height:1.5">We will get back to you after reviewing your details. Our partner onboarding manager will connect with you within <strong>24–48 hours</strong>.</p>' +
+          '<div style="background:#f0f9f3;border:1px dashed #7ecb9a;border-radius:8px;padding:10px;font-size:13px;color:#0a5e3a;margin-bottom:18px">' +
+            'Application Ref: <strong id="agentAppIdDisplay"></strong>' +
+          '</div>' +
+          '<button type="button" id="agentDoneBtn" style="padding:10px 28px;background:var(--green-primary,#0c7a4e);color:#fff;border:none;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Done</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
   function modalHTML() {
     return '<div class="modal" id="applyModal" role="dialog" aria-modal="true"><div class="modal-scrim" data-modal-close></div>' +
       '<div class="modal-box"><button class="modal-close" data-modal-close><i data-lucide="x"></i></button>' +
@@ -929,6 +1006,28 @@
     var m = document.getElementById("referModal");
     if (m) { m.classList.remove("open"); document.body.style.overflow = ""; }
   }
+
+  function openAgentModal() {
+    var m = document.getElementById("agentModal");
+    if (!m) return;
+    var form = document.getElementById("agentForm");
+    var thanks = document.getElementById("agentThanks");
+    var err = document.getElementById("agentError");
+    var btn = document.getElementById("agentSubmitBtn");
+    if (form) { form.reset(); form.style.display = ""; }
+    if (thanks) thanks.style.display = "none";
+    if (err) { err.textContent = ""; err.style.display = "none"; }
+    if (btn) { btn.disabled = false; var t = btn.querySelector(".btn-text"); if (t) t.textContent = "Submit Application"; }
+    m.classList.add("open");
+    document.body.style.overflow = "hidden";
+    relucide();
+  }
+  function closeAgentModal() {
+    var m = document.getElementById("agentModal");
+    if (m) { m.classList.remove("open"); document.body.style.overflow = ""; }
+  }
+  window.cbOpenAgentModal = openAgentModal;
+
   function resetBtn(form) { var b = form.querySelector('button[type=submit]'); if (b) { b.disabled = false; var lbl = b.querySelector(".btn-label"); if (lbl) lbl.innerHTML = '<i data-lucide="shield-check"></i> Get a call back'; } }
 
   function validate(form) {
@@ -1153,15 +1252,25 @@
     document.addEventListener("submit", handleSubmit);
     document.addEventListener("input", function (e) {
       if (e.target.name === "mobile") e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+      if (e.target.name === "agentMobile") e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
       if (e.target.name === "pan") e.target.value = e.target.value.toUpperCase().slice(0, 10);
     });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeModal(); closeDrawer(); closeQbPopup(); var ck = document.getElementById("ckModal"); if (ck) ck.classList.remove("open"); var rm = document.getElementById("referModal"); if (rm) rm.classList.remove("open"); } });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeModal(); closeDrawer(); closeQbPopup();
+        var ck = document.getElementById("ckModal"); if (ck) ck.classList.remove("open");
+        var rm = document.getElementById("referModal"); if (rm) rm.classList.remove("open");
+        var am = document.getElementById("agentModal"); if (am) am.classList.remove("open");
+      }
+    });
 
-    /* Refer Now modal */
+    /* Refer Now & Become an Agent modals */
     document.addEventListener("click", function (e) {
       var t = e.target;
       if (t.closest("#cbReferNowBtn") || t.closest("#cbNavReferBtn")) { openReferModal(); }
       if (t.closest("#referModalClose") || t.closest("#referModalScrim")) { closeReferModal(); }
+      if (t.closest("#cbNavAgentBtn") || t.closest("#cbDrawerAgentBtn") || t.closest("[data-agent-modal]")) { openAgentModal(); closeDrawer(); }
+      if (t.closest("#agentModalClose") || t.closest("#agentModalScrim") || t.closest("#agentDoneBtn")) { closeAgentModal(); }
     });
     document.addEventListener("submit", function (e) {
       if (!e.target.matches("#referForm")) return;
@@ -1177,6 +1286,92 @@
       }
       f.style.display = "none";
       document.getElementById("referThanks").style.display = "block";
+    });
+
+    /* Become a Loan Agent form submission */
+    document.addEventListener("submit", function (e) {
+      if (!e.target.matches("#agentForm")) return;
+      e.preventDefault();
+      var f = e.target;
+      var errEl = document.getElementById("agentError");
+      if (errEl) { errEl.style.display = "none"; errEl.textContent = ""; }
+
+      var name      = (f.agentName.value || "").trim();
+      var mobile    = (f.agentMobile.value || "").replace(/\D/g, "");
+      var email     = (f.agentEmail.value || "").trim();
+      var city      = (f.agentCity.value || "").trim();
+      var agentType = (f.agentType.value || "").trim();
+      var consent   = f.agentConsent ? f.agentConsent.checked : false;
+      var hp        = f._hp ? f._hp.value : "";
+
+      var docEls = f.querySelectorAll('input[name="agentDocs"]:checked');
+      var docs = [];
+      docEls.forEach(function (d) { docs.push(d.value); });
+
+      function showErr(msg) {
+        if (errEl) {
+          errEl.textContent = msg;
+          errEl.style.display = "block";
+        } else {
+          alert(msg);
+        }
+      }
+
+      if (name.length < 2) { showErr("Please enter your full name (minimum 2 characters)."); return; }
+      if (!/^[6-9]\d{9}$/.test(mobile)) { showErr("Please enter a valid 10-digit mobile number."); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showErr("Please enter a valid email address."); return; }
+      if (city.length < 2) { showErr("Please enter your city / location."); return; }
+      if (!consent) { showErr("Please accept the terms and consent to continue."); return; }
+
+      var btn = document.getElementById("agentSubmitBtn");
+      if (btn) {
+        btn.disabled = true;
+        var btnTxt = btn.querySelector(".btn-text");
+        if (btnTxt) btnTxt.textContent = "Submitting…";
+      }
+
+      var payload = {
+        name:      name,
+        mobile:    mobile,
+        email:     email,
+        city:      city,
+        agentType: agentType,
+        documents: docs,
+        consent:   true,
+        _hp:       hp,
+      };
+
+      fetch("/api/agents", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify(payload),
+      })
+      .then(function (res) {
+        return res.json().then(function (data) {
+          if (!res.ok) {
+            throw new Error(data.error || "Submission failed. Status: " + res.status);
+          }
+          return data;
+        });
+      })
+      .then(function (data) {
+        f.style.display = "none";
+        var thanks = document.getElementById("agentThanks");
+        var appDisplay = document.getElementById("agentAppIdDisplay");
+        if (appDisplay && data.applicationId) {
+          appDisplay.textContent = data.applicationId;
+        }
+        if (thanks) thanks.style.display = "block";
+        relucide();
+      })
+      .catch(function (err) {
+        showErr(err.message || "Failed to submit application. Please check your connection.");
+        if (btn) {
+          btn.disabled = false;
+          var btnTxt = btn.querySelector(".btn-text");
+          if (btnTxt) btnTxt.textContent = "Submit Application";
+        }
+      });
     });
   }
 
@@ -2327,7 +2522,7 @@
     if (foot) foot.insertAdjacentHTML("beforebegin", bridgeBandHTML());
     if (foot) foot.insertAdjacentHTML("beforebegin", whyStripHTML());
     if (foot) foot.innerHTML = footerHTML();
-    document.body.insertAdjacentHTML("beforeend", floatsHTML() + modalHTML() + referModalHTML() + cookieHTML() + qbPopupHTML());
+    document.body.insertAdjacentHTML("beforeend", floatsHTML() + modalHTML() + referModalHTML() + agentModalHTML() + cookieHTML() + qbPopupHTML());
     wire(); wireCookies(); wireQb();
     document.querySelectorAll("[data-emi]").forEach(initEmi);
     applyLang(); relucide();
@@ -2403,7 +2598,7 @@
     if (foot) foot.insertAdjacentHTML("beforebegin", bridgeBandHTML());
     if (foot) foot.insertAdjacentHTML("beforebegin", whyStripHTML());
     if (foot) foot.innerHTML = footerHTML();
-    document.body.insertAdjacentHTML("beforeend", floatsHTML() + modalHTML() + referModalHTML() + cookieHTML() + qbPopupHTML());
+    document.body.insertAdjacentHTML("beforeend", floatsHTML() + modalHTML() + referModalHTML() + agentModalHTML() + cookieHTML() + qbPopupHTML());
     wire(); wireCookies(); wireQb();
     document.querySelectorAll("[data-emi]").forEach(initEmi);
     applyLang(); relucide();

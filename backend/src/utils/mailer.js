@@ -144,4 +144,60 @@ async function sendGrievanceAcknowledgement({ to, name, ticketId, category }) {
   }
 }
 
-module.exports = { initMailer, sendEmail, sendDSRAcknowledgement, sendGrievanceAcknowledgement };
+/**
+ * Sends a welcome / acknowledgement email to a loan agent applicant.
+ */
+async function sendAgentWelcomeEmail({ to, name, applicationId }) {
+  const subject = `Loan Agent Application Received — Ref: ${applicationId}`;
+  const text = [
+    `Dear ${name || "Partner"},`,
+    "",
+    "Thank you for your interest in partnering with MyCashBridge as a Loan Agent / Channel Partner.",
+    `Your Application Reference ID is: ${applicationId}`,
+    "",
+    "Our partner onboarding team will review your application and the documents you declared.",
+    "A dedicated partner relationship manager will contact you within 24 to 48 hours to guide you through the next onboarding steps.",
+    "",
+    "If you have any immediate questions, feel free to contact us at support@mycashbridge.com.",
+    "",
+    "— MyCashBridge Partner Network",
+    "Reddington Global Consultancy Private Limited",
+  ].join("\n");
+
+  if (to) await sendEmail({ to, subject, text });
+}
+
+/**
+ * Sends an alert to the internal team about a new agent application.
+ */
+async function sendAdminAgentAlert({ name, mobile, email, city, agentType, documents, applicationId }) {
+  const notifyEmail = process.env.NOTIFICATION_EMAIL || process.env.SMTP_USER;
+  if (!notifyEmail) return;
+
+  const subject = `[Agent Application] New Partner Lead: ${name} (${city || "N/A"}) — ${applicationId}`;
+  const text = [
+    `New Loan Agent Application received:`,
+    "",
+    `Application ID : ${applicationId}`,
+    `Name           : ${name}`,
+    `Mobile         : ${mobile}`,
+    `Email          : ${email}`,
+    `City           : ${city || "N/A"}`,
+    `Agent Type     : ${agentType || "N/A"}`,
+    `Documents      : ${Array.isArray(documents) && documents.length ? documents.join(", ") : "None declared"}`,
+    "",
+    `Review this application via the Admin API: GET /api/admin/agents`,
+  ].join("\n");
+
+  await sendEmail({ to: notifyEmail, subject, text });
+}
+
+module.exports = {
+  initMailer,
+  sendEmail,
+  sendDSRAcknowledgement,
+  sendGrievanceAcknowledgement,
+  sendAgentWelcomeEmail,
+  sendAdminAgentAlert,
+};
+

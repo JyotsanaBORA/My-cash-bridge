@@ -732,7 +732,7 @@ img.testi-av { object-fit: cover; display: block; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
   .h-hero { font-size: 44px; }
   .h-sec { font-size: 30px; }
-  .nav-links, .nav-tel, .lang-toggle, .nav-download-btn { display: none; }
+  .nav-links, .nav-tel, .lang-toggle, .nav-download-btn, .nav-agent-btn { display: none; }
   .hamburger { display: inline-flex; }
   .band-img { order: -1; }
 }

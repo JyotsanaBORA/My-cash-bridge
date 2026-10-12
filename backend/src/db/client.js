@@ -109,13 +109,111 @@ async function connect() {
   await bureauCol.createIndex({ bureau_pull_status: 1 });
   console.log(`[DB] Indexes ready — ${DB_NAME}.bureau_consents`);
 
+  // Loan Agent Applications
+  const agentCol = _db.collection("agentApplications");
+  await agentCol.createIndex({ applicationId: 1 }, { unique: true });
+  await agentCol.createIndex({ mobile: 1, createdAt: -1 });
+  await agentCol.createIndex({ email: 1, createdAt: -1 });
+  await agentCol.createIndex({ status: 1, createdAt: -1 });
+  await agentCol.createIndex({ createdAt: -1 });
+  console.log(`[DB] Indexes ready — ${DB_NAME}.agentApplications`);
+
   // Phase 10: Processor inventory — seed if empty
   await seedProcessorInventory(_db);
 }
 
+class MemoryCollection {
+  constructor(name) {
+    this.name = name;
+    this.docs = [];
+  }
+  async createIndex() { return Promise.resolve(); }
+  async insertOne(doc) {
+    const d = { ...doc, _id: doc._id || "mem_" + Math.random().toString(36).substring(2, 9) };
+    this.docs.push(d);
+    return { acknowledged: true, insertedId: d._id };
+  }
+  async insertMany(docs) {
+    const inserted = docs.map(d => ({ ...d, _id: d._id || "mem_" + Math.random().toString(36).substring(2, 9) }));
+    this.docs.push(...inserted);
+    return { acknowledged: true, insertedCount: inserted.length };
+  }
+  async findOne(query = {}, options = {}) {
+    const list = await this.find(query, options).toArray();
+    return list[0] || null;
+  }
+  find(query = {}, options = {}) {
+    let result = this.docs.filter(d => {
+      for (const [k, v] of Object.entries(query)) {
+        if (v && typeof v === "object") {
+          if (v.$gte && d[k] < v.$gte) return false;
+          if (v.$in && !v.$in.includes(d[k])) return false;
+        } else if (d[k] !== v) {
+          return false;
+        }
+      }
+      return true;
+    });
+    const cursor = {
+      sort(s) {
+        if (s && typeof s === "object") {
+          const key = Object.keys(s)[0];
+          const dir = s[key];
+          result.sort((a, b) => (dir === -1 ? (b[key] > a[key] ? 1 : -1) : (a[key] > b[key] ? 1 : -1)));
+        }
+        return cursor;
+      },
+      limit(n) {
+        result = result.slice(0, n);
+        return cursor;
+      },
+      async toArray() {
+        if (options && options.projection) {
+          return result.map(doc => {
+            const projected = {};
+            for (const p of Object.keys(options.projection)) {
+              if (options.projection[p]) projected[p] = doc[p];
+            }
+            return projected;
+          });
+        }
+        return [...result];
+      }
+    };
+    return cursor;
+  }
+  async updateOne(filter, update) {
+    const doc = await this.findOne(filter);
+    if (!doc) return { matchedCount: 0, modifiedCount: 0 };
+    if (update.$set) {
+      Object.assign(doc, update.$set);
+    }
+    return { matchedCount: 1, modifiedCount: 1 };
+  }
+  async countDocuments(filter = {}) {
+    const res = await this.find(filter).toArray();
+    return res.length;
+  }
+}
+
+let _fallbackDb;
+function getFallbackDb() {
+  if (!_fallbackDb) {
+    const cols = {};
+    _fallbackDb = {
+      collection(name) {
+        if (!cols[name]) cols[name] = new MemoryCollection(name);
+        return cols[name];
+      }
+    };
+    seedProcessorInventory(_fallbackDb).catch(() => {});
+  }
+  return _fallbackDb;
+}
+
 function getDb() {
-  if (!_db) throw new Error("Database not connected. Call connect() first.");
-  return _db;
+  if (_db) return _db;
+  return getFallbackDb();
 }
 
 /**

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Portal &ndash; MyCashBridge</title>
+  <link rel="icon" href="assets/logo-cashbridge-mark.svg" />
+  <link rel="stylesheet" href="assets/site.css" />
+  <script src="assets/lucide.min.js"></script>
+  <style>
+    body {
+      background: #f4f6f8;
+      color: #1e293b;
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .admin-header {
+      background: #073d27;
+      color: #fff;
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .admin-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+    }
+    .admin-logo span {
+      background: #9AEF5E;
+      color: #073d27;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .admin-container {
+      max-width: 1280px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+    /* Auth Modal / Box */
+    .auth-card {
+      max-width: 420px;
+      margin: 80px auto;
+      background: #fff;
+      padding: 36px 32px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+      text-align: center;
+    }
+    .auth-card h2 {
+      margin: 0 0 8px;
+      color: #073d27;
+      font-size: 24px;
+      font-weight: 800;
+    }
+    .auth-card p {
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .auth-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 15px;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .auth-input:focus {
+      border-color: #0c7a4e;
+    }
+    .btn-auth {
+      width: 100%;
+      padding: 13px;
+      background: #0c7a4e;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-auth:hover {
+      background: #073d27;
+    }
+    /* Stats Row */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: #fff;
+      padding: 20px 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-left: 4px solid #0c7a4e;
+    }
+    .stat-card.stat-pending { border-left-color: #f59e0b; }
+    .stat-card.stat-contacted { border-left-color: #3b82f6; }
+    .stat-card.stat-approved { border-left-color: #10b981; }
+    .stat-val {
+      font-size: 28px;
+      font-weight: 800;
+      color: #073d27;
+      line-height: 1.2;
+    }
+    .stat-lbl {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    /* Controls Bar */
+    .controls-bar {
+      background: #fff;
+      padding: 16px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-select, .search-box {
+      padding: 9px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      background: #fff;
+      outline: none;
+    }
+    .search-box {
+      min-width: 240px;
+    }
+    .btn-action {
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-export {
+      background: #0c7a4e;
+      color: #fff;
+    }
+    .btn-export:hover {
+      background: #073d27;
+    }
+    .btn-refresh {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+    .btn-refresh:hover {
+      background: #cbd5e1;
+    }
+    /* Data Table */
+    .table-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      overflow-x: auto;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+    table.data-table th {
+      background: #f8fafc;
+      padding: 14px 18px;
+      font-weight: 700;
+      color: #475569;
+      border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    table.data-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+    table.data-table tr:hover td {
+      background: #fbfcfd;
+    }
+    /* Status Pills */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+    .status-pending { background: #fef3c7; color: #b45309; }
+    .status-contacted { background: #e0f2fe; color: #0369a1; }
+    .status-in_review { background: #f3e8ff; color: #7e22ce; }
+    .status-approved { background: #dcfce7; color: #15803d; }
+    .status-rejected { background: #fee2e2; color: #b91c1c; }
+    /* Action Dropdown */
+    .status-change-select {
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 12.5px;
+      background: #fff;
+      cursor: pointer;
+    }
+    .doc-tag {
+      display: inline-block;
+      background: #f1f5f9;
+      color: #334155;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin: 2px;
+      font-weight: 600;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #073d27;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      font-size: 14px;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="admin-header">
+    <a href="index.html" class="admin-logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9AEF5E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      MyCashBridge <span>Admin</span>
+    </a>
+    <div id="headerActions" style="display:none">
+      <button class="btn-action btn-refresh" id="logoutBtn" style="padding:6px 12px;font-size:13px">Logout</button>
+    </div>
+  </header>
+
+  <!-- Login Gate -->
+  <div id="authGate" class="auth-card">
+    <div style="background:#e0fced;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0c7a4e" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
+    <h2>Admin Access</h2>
+    <p>Enter your <code>ADMIN_API_KEY</code> to access loan agent applications and compliance data.</p>
+    <form id="authForm">
+      <input type="password" id="adminKeyInput" class="auth-input" placeholder="Enter ADMIN_API_KEY" required autocomplete="current-password" />
+      <div id="authError" style="display:none;color:#dc2626;font-size:13px;margin-bottom:12px;font-weight:600"></div>
+      <button type="submit" class="btn-auth" id="authSubmitBtn">Unlock Dashboard</button>
+    </form>
+  </div>
+
+  <!-- Dashboard View -->
+  <div id="dashboardView" class="admin-container" style="display:none">
+    
+    <!-- Stats Row -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div>
+          <div class="stat-val" id="statTotal">0</div>
+          <div class="stat-lbl">Total Applications</div>
+        </div>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0c7a4e" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      </div>
+      <div class="stat-card stat-pending">
+        <div>
+          <div class="stat-val" id="statPending">0</div>
+          <div class="stat-lbl">Pending Review</div>
+        </div>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      </div>
+      <div class="stat-card stat-contacted">
+        <div>
+          <div class="stat-val" id="statContacted">0</div>
+          <div class="stat-lbl">Contacted</div>
+        </div>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      </div>
+      <div class="stat-card stat-approved">
+        <div>
+          <div class="stat-val" id="statApproved">0</div>
+          <div class="stat-lbl">Approved / Onboarded</div>
+        </div>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      </div>
+    </div>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="controls-left">
+        <select id="statusFilter" class="filter-select">
+          <option value="">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="contacted">Contacted</option>
+          <option value="in_review">In Review</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <input type="text" id="searchInput" class="search-box" placeholder="Search by name, mobile, city..." />
+      </div>
+      <div style="display:flex;gap:10px">
+        <button id="refreshBtn" class="btn-action btn-refresh">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          Refresh
+        </button>
+        <button id="exportCsvBtn" class="btn-action btn-export">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Export CSV
+        </button>
+      </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="table-card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Ref ID</th>
+            <th>Applicant</th>
+            <th>Contact</th>
+            <th>City</th>
+            <th>Profile</th>
+            <th>Documents</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="agentTableBody">
+          <tr>
+            <td colspan="9" style="text-align:center;padding:40px;color:#64748b">Loading applications...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div id="toast" class="toast">Status updated</div>
+
+  <script>
+    (function () {
+      let currentAdminKey = sessionStorage.getItem("cb_admin_key") || "";
+      let applications = [];
+
+      const authGate = document.getElementById("authGate");
+      const dashboardView = document.getElementById("dashboardView");
+      const headerActions = document.getElementById("headerActions");
+      const authForm = document.getElementById("authForm");
+      const adminKeyInput = document.getElementById("adminKeyInput");
+      const authError = document.getElementById("authError");
+      const tableBody = document.getElementById("agentTableBody");
+      const toast = document.getElementById("toast");
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.display = "none"; }, 3000);
+      }
+
+      function checkSession() {
+        if (currentAdminKey) {
+          fetchApplications();
+        } else {
+          authGate.style.display = "block";
+          dashboardView.style.display = "none";
+          headerActions.style.display = "none";
+        }
+      }
+
+      authForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const key = adminKeyInput.value.trim();
+        if (!key) return;
+        currentAdminKey = key;
+        authError.style.display = "none";
+        fetchApplications(true);
+      });
+
+      document.getElementById("logoutBtn").addEventListener("click", function () {
+        sessionStorage.removeItem("cb_admin_key");
+        currentAdminKey = "";
+        adminKeyInput.value = "";
+        checkSession();
+      });
+
+      async function fetchApplications(isFirstLogin = false) {
+        try {
+          const res = await fetch("/api/admin/agents", {
+            headers: { "X-Admin-Key": currentAdminKey }
+          });
+
+          if (res.status === 403 || res.status === 503) {
+            authError.textContent = "Invalid Admin API Key.";
+            authError.style.display = "block";
+            sessionStorage.removeItem("cb_admin_key");
+            return;
+          }
+
+          const data = await res.json();
+          if (data.ok) {
+            sessionStorage.setItem("cb_admin_key", currentAdminKey);
+            authGate.style.display = "none";
+            dashboardView.style.display = "block";
+            headerActions.style.display = "block";
+            applications = data.data || [];
+            updateStats();
+            renderTable();
+            if (isFirstLogin) showToast("Logged in successfully");
+          }
+        } catch (err) {
+          authError.textContent = "Network error connecting to server.";
+          authError.style.display = "block";
+        }
+      }
+
+      function updateStats() {
+        const total = applications.length;
+        const pending = applications.filter(a => a.status === "pending").length;
+        const contacted = applications.filter(a => a.status === "contacted").length;
+        const approved = applications.filter(a => a.status === "approved").length;
+
+        document.getElementById("statTotal").textContent = total;
+        document.getElementById("statPending").textContent = pending;
+        document.getElementById("statContacted").textContent = contacted;
+        document.getElementById("statApproved").textContent = approved;
+      }
+
+      function renderTable() {
+        const filterVal = document.getElementById("statusFilter").value;
+        const searchVal = document.getElementById("searchInput").value.trim().toLowerCase();
+
+        const filtered = applications.filter(app => {
+          if (filterVal && app.status !== filterVal) return false;
+          if (searchVal) {
+            const matchName = (app.name || "").toLowerCase().includes(searchVal);
+            const matchMobile = (app.mobile || "").includes(searchVal);
+            const matchEmail = (app.email || "").toLowerCase().includes(searchVal);
+            const matchCity = (app.city || "").toLowerCase().includes(searchVal);
+            const matchId = (app.applicationId || "").toLowerCase().includes(searchVal);
+            if (!matchName && !matchMobile && !matchEmail && !matchCity && !matchId) return false;
+          }
+          return true;
+        });
+
+        if (!filtered.length) {
+          tableBody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#64748b">No applications found.</td></tr>';
+          return;
+        }
+
+        tableBody.innerHTML = filtered.map(app => {
+          const dateStr = app.createdAt ? new Date(app.createdAt).toLocaleDateString("en-IN", { day: '2-digit', month: 'short', year: 'numeric' }) : "-";
+          const docsHtml = Array.isArray(app.documents) && app.documents.length
+            ? app.documents.map(d => `<span class="doc-tag">${d}</span>`).join("")
+            : '<span style="color:#94a3b8;font-size:12px">None</span>';
+
+          return `
+            <tr>
+              <td style="color:#64748b;font-size:12px;white-space:nowrap">${dateStr}</td>
+              <td style="font-weight:700;font-family:monospace;color:#073d27">${app.applicationId || "-"}</td>
+              <td><strong>${escapeHtml(app.name)}</strong></td>
+              <td>
+                <a href="tel:${app.mobile}" style="color:#0c7a4e;font-weight:700;text-decoration:none">${app.mobile}</a><br>
+                <small style="color:#64748b">${escapeHtml(app.email)}</small>
+              </td>
+              <td>${escapeHtml(app.city || "-")}</td>
+              <td><span style="font-size:12px;color:#334155">${escapeHtml(app.agentType || "General")}</span></td>
+              <td>${docsHtml}</td>
+              <td><span class="status-badge status-${app.status}">${app.status || "pending"}</span></td>
+              <td>
+                <select class="status-change-select" data-app-id="${app.applicationId}">
+                  <option value="pending" ${app.status === "pending" ? "selected" : ""}>Pending</option>
+                  <option value="in_review" ${app.status === "in_review" ? "selected" : ""}>In Review</option>
+                  <option value="contacted" ${app.status === "contacted" ? "selected" : ""}>Contacted</option>
+                  <option value="approved" ${app.status === "approved" ? "selected" : ""}>Approved</option>
+                  <option value="rejected" ${app.status === "rejected" ? "selected" : ""}>Rejected</option>
+                </select>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        // Wire select listeners
+        document.querySelectorAll(".status-change-select").forEach(sel => {
+          sel.addEventListener("change", async function () {
+            const appId = this.getAttribute("data-app-id");
+            const newStatus = this.value;
+            try {
+              const res = await fetch(`/api/admin/agents/${appId}/status`, {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-Admin-Key": currentAdminKey
+                },
+                body: JSON.stringify({ status: newStatus })
+              });
+              const data = await res.json();
+              if (data.ok) {
+                const target = applications.find(a => a.applicationId === appId);
+                if (target) target.status = newStatus;
+                updateStats();
+                renderTable();
+                showToast(`Status updated to ${newStatus}`);
+              } else {
+                alert(data.error || "Failed to update status");
+              }
+            } catch (e) {
+              alert("Network error updating status");
+            }
+          });
+        });
+      }
+
+      function escapeHtml(str) {
+        if (!str) return "";
+        return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      }
+
+      document.getElementById("statusFilter").addEventListener("change", renderTable);
+      document.getElementById("searchInput").addEventListener("input", renderTable);
+      document.getElementById("refreshBtn").addEventListener("click", () => fetchApplications());
+
+      document.getElementById("exportCsvBtn").addEventListener("click", function () {
+        fetch("/api/admin/agents?format=csv", {
+          headers: { "X-Admin-Key": currentAdminKey }
+        })
+        .then(res => res.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `loan-agents-${new Date().toISOString().slice(0, 10)}.csv`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        });
+      });
+
+      checkSession();
+    })();
+  </script>
+</body>
+</html>

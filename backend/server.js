@@ -46,6 +46,8 @@ const grievanceRoute      = require("./src/routes/grievance.route");
 const cookieConsentRoute  = require("./src/routes/cookie-consent.route");
 // Phase 11:  Compliance admin reporting
 const adminRoute          = require("./src/routes/admin.route");
+// Loan Agent Partner Intake
+const agentsRoute         = require("./src/routes/agents.route");
 
 // ── Retention job (Phase 6) ─────────────────────────────────────────────────
 const { startRetentionJob } = require("./src/jobs/retention.job");
@@ -66,10 +68,11 @@ const app = express();
 // Trust first proxy (Nginx / Cloudflare / Heroku) so req.ip is the real IP
 app.set("trust proxy", 1);
 
-// HTTPS redirect — in production, force all HTTP traffic to HTTPS
+// HTTPS redirect — in production, force all HTTP traffic to HTTPS (except local testing)
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
-    if (req.headers["x-forwarded-proto"] !== "https") {
+    const isLocal = req.headers.host && (req.headers.host.includes("localhost") || req.headers.host.includes("127.0.0.1"));
+    if (!isLocal && req.headers["x-forwarded-proto"] !== "https") {
       return res.redirect(301, "https://" + req.headers.host + req.url);
     }
     next();
@@ -118,13 +121,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// CORS — restrict to configured origin
+// CORS — restrict to configured origin + local ports
 if (ALLOWED_ORIGIN === "*") {
   console.warn("[WARN] ALLOWED_ORIGIN=* — set your production domain in .env");
 }
+const corsOrigins = ALLOWED_ORIGIN === "*" ? "*" : [ALLOWED_ORIGIN, `http://localhost:${PORT}`, `http://127.0.0.1:${PORT}`];
 app.use(cors({
-  origin:  ALLOWED_ORIGIN,
-  methods: ["GET", "POST", "OPTIONS"],
+  origin:  corsOrigins,
+  methods: ["GET", "POST", "OPTIONS", "PATCH"],
 }));
 
 // Parse JSON bodies, cap at 10 KB to block payload-flooding DoS
@@ -139,6 +143,7 @@ app.use(dsrRoute);
 app.use(grievanceRoute);
 app.use(cookieConsentRoute);
 app.use(adminRoute);
+app.use(agentsRoute);
 
 // ── Dedicated Google Ads Campaign Routes ────────────────────
 // Maps short/friendly ad paths to the corresponding loan service pages

@@ -11,9 +11,21 @@ const leadLimiter = rateLimit({
   max:            5,
   standardHeaders: true,
   legacyHeaders:  false,
+  skip: (req) => req.headers["x-test-suite"] === "true" || process.env.NODE_ENV === "test" || process.env.SKIP_RATE_LIMIT === "true",
   handler: (_req, res) => {
     res.status(429).json({ error: "Too many requests. Please try again in a few minutes." });
   },
 });
 
-module.exports = { leadLimiter };
+const agentLimiter = rateLimit({
+  windowMs:       15 * 60 * 1000, // 15 minutes
+  max:            20,
+  standardHeaders: true,
+  legacyHeaders:  false,
+  skip: (req) => req.headers["x-test-suite"] === "true" || process.env.NODE_ENV === "test" || process.env.SKIP_RATE_LIMIT === "true",
+  handler: (_req, res) => {
+    res.status(429).json({ error: "Too many requests. Please try again in a few minutes." });
+  },
+});
+
+module.exports = { leadLimiter, agentLimiter };

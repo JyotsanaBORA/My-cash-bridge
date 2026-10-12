@@ -131,7 +131,7 @@ router.get("/api/admin/retention-logs", adminAuth, async (req, res) => {
 router.get("/api/admin/consent-stats", adminAuth, async (req, res) => {
   try {
     const db = getDb();
-    const [totalLeads, mktYes, mktNo, cookieAnalytics, cookieMarketing, dsrOpen, dsrResolved, grvOpen] =
+    const [totalLeads, mktYes, mktNo, cookieAnalytics, cookieMarketing, dsrOpen, dsrResolved, grvOpen, agentsTotal, agentsPending, agentsApproved] =
       await Promise.all([
         db.collection("leads").countDocuments({}),
         db.collection("leads").countDocuments({ "consent.marketingConsent": true }),
@@ -141,14 +141,18 @@ router.get("/api/admin/consent-stats", adminAuth, async (req, res) => {
         db.collection("dsrRequests").countDocuments({ status: { $in: ["open", "in_progress"] } }),
         db.collection("dsrRequests").countDocuments({ status: { $in: ["resolved", "closed"] } }),
         db.collection("grievances").countDocuments({ status: { $in: ["open", "in_progress"] } }),
+        db.collection("agentApplications").countDocuments({}),
+        db.collection("agentApplications").countDocuments({ status: "pending" }),
+        db.collection("agentApplications").countDocuments({ status: "approved" }),
       ]);
     return res.json({
       ok: true,
       stats: {
-        leads:   { total: totalLeads, marketingConsent: mktYes, noMarketingConsent: mktNo },
-        cookies: { analyticsConsent: cookieAnalytics, marketingConsent: cookieMarketing },
-        dsr:     { open: dsrOpen, resolved: dsrResolved },
+        leads:      { total: totalLeads, marketingConsent: mktYes, noMarketingConsent: mktNo },
+        cookies:    { analyticsConsent: cookieAnalytics, marketingConsent: cookieMarketing },
+        dsr:        { open: dsrOpen, resolved: dsrResolved },
         grievances: { open: grvOpen },
+        agents:     { total: agentsTotal, pending: agentsPending, approved: agentsApproved },
       },
     });
   } catch (err) {
@@ -185,6 +189,91 @@ router.get("/api/admin/processors", adminAuth, async (req, res) => {
   } catch (err) {
     console.error("[Admin] Processors error:", err.message);
     return res.status(500).json({ error: "Query failed." });
+  }
+});
+
+/* ── GET /api/admin/agents ─────────────────────────────────── */
+router.get("/api/admin/agents", adminAuth, async (req, res) => {
+  try {
+    const db = getDb();
+    const filter = req.query.status ? { status: req.query.status } : {};
+    const docs = await db.collection("agentApplications")
+      .find(filter, {
+        projection: {
+          applicationId: 1,
+          name: 1,
+          mobile: 1,
+          email: 1,
+          city: 1,
+          agentType: 1,
+          documents: 1,
+          status: 1,
+          notes: 1,
+          createdAt: 1,
+          updatedAt: 1,
+        },
+      })
+      .sort({ createdAt: -1 })
+      .limit(2000)
+      .toArray();
+    return sendResult(res, docs, "loan-agent-applications.csv", req.query.format);
+  } catch (err) {
+    console.error("[Admin] Agents list error:", err.message);
+    return res.status(500).json({ error: "Query failed." });
+  }
+});
+
+/* ── PATCH /api/admin/agents/:id/status ─────────────────────── */
+router.patch("/api/admin/agents/:id/status", adminAuth, async (req, res) => {
+  try {
+    const db = getDb();
+    const { id } = req.params;
+    const { status, notes } = req.body || {};
+
+    const validStatuses = ["pending", "in_review", "contacted", "approved", "rejected"];
+    if (!status || !validStatuses.includes(status)) {
+      return res.status(400).json({
+        error: `Invalid status. Must be one of: ${validStatuses.join(", ")}`,
+      });
+    }
+
+    const updateFields = {
+      status,
+      updatedAt: new Date(),
+    };
+    if (typeof notes === "string") {
+      updateFields.notes = notes.trim().slice(0, 500);
+    }
+
+    const result = await db.collection("agentApplications").updateOne(
+      { applicationId: id },
+      { $set: updateFields }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "Agent application not found." });
+    }
+
+    const { logAudit } = require("../utils/audit");
+    logAudit(db, {
+      action:    "AGENT_STATUS_UPDATED",
+      entity:    "agentApplications",
+      entityId:  id,
+      userId:    "admin",
+      ip:        req.ip,
+      userAgent: req.headers["user-agent"],
+      metadata:  { newStatus: status, notes: updateFields.notes },
+    });
+
+    return res.json({
+      ok: true,
+      message: `Application ${id} status updated to ${status}.`,
+      applicationId: id,
+      status,
+    });
+  } catch (err) {
+    console.error("[Admin] Update agent status error:", err.message);
+    return res.status(500).json({ error: "Update failed." });
   }
 });
 
