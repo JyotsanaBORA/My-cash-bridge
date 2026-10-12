@@ -597,12 +597,14 @@
         dropdown("Tools", "nav.tools", BASE + "tools/emi-calculator.html", dropItems(TOOLS, "tools"), true) +
       '</nav>' +
       '<span class="nav-spacer"></span>' +
-      '<div class="lang-toggle" data-no-i18n><button data-l="en" data-setlang="en">EN</button><button data-l="hi" data-setlang="hi">\u0939\u093F\u0902</button></div>' +
-      '<a class="nav-tel" href="tel:' + CFG.phoneRaw + '"><i data-lucide="phone-call"></i> ' + CFG.phone + '</a>' +
-      '<button class="btn btn-filled btn-sm" data-apply data-i18n="nav.apply">Apply now</button>' +
-      '<button class="btn btn-outline btn-sm nav-download-btn" id="cbNavReferBtn"><i data-lucide="share-2"></i> Refer Now</button>' +
-      '<button class="btn btn-outline btn-sm nav-agent-btn" id="cbNavAgentBtn"><i data-lucide="briefcase"></i> Become an Agent</button>' +
-      '<button class="hamburger" aria-label="Menu" data-drawer-open><i data-lucide="menu"></i></button>' +
+      '<div class="nav-actions">' +
+        '<div class="lang-toggle" data-no-i18n><button data-l="en" data-setlang="en">EN</button><button data-l="hi" data-setlang="hi">\u0939\u093F\u0902</button></div>' +
+        '<a class="nav-tel" href="tel:' + CFG.phoneRaw + '"><i data-lucide="phone-call"></i> ' + CFG.phone + '</a>' +
+        '<button class="btn btn-filled btn-sm nav-apply-btn" data-apply data-i18n="nav.apply">Apply now</button>' +
+        '<button class="btn btn-outline btn-sm nav-download-btn nav-refer-btn" id="cbNavReferBtn"><i data-lucide="share-2"></i> Refer Now</button>' +
+        '<button class="btn btn-outline btn-sm nav-agent-btn" id="cbNavAgentBtn"><i data-lucide="briefcase"></i> Become an Agent</button>' +
+        '<button class="hamburger" aria-label="Menu" data-drawer-open><i data-lucide="menu"></i></button>' +
+      '</div>' +
     '</div></header>' + drawerHTML();
   }
 
@@ -627,6 +629,7 @@
       '<div style="margin-top:18px;display:flex;flex-direction:column;gap:10px">' +
         '<button class="btn btn-filled btn-block" data-apply>Apply now</button>' +
         '<button class="btn btn-outline btn-block" id="cbDrawerAgentBtn"><i data-lucide="briefcase"></i> Become an Agent</button>' +
+        '<button class="btn btn-outline btn-block" id="cbDrawerReferBtn"><i data-lucide="share-2"></i> Refer Now</button>' +
         '<a class="btn btn-outline btn-block" href="tel:' + CFG.phoneRaw + '"><i data-lucide="phone-call"></i> ' + CFG.phone + '</a>' +
       '</div></div></div>';
   }
@@ -1267,7 +1270,7 @@
     /* Refer Now & Become an Agent modals */
     document.addEventListener("click", function (e) {
       var t = e.target;
-      if (t.closest("#cbReferNowBtn") || t.closest("#cbNavReferBtn")) { openReferModal(); }
+      if (t.closest("#cbReferNowBtn") || t.closest("#cbNavReferBtn") || t.closest("#cbDrawerReferBtn")) { openReferModal(); closeDrawer(); }
       if (t.closest("#referModalClose") || t.closest("#referModalScrim")) { closeReferModal(); }
       if (t.closest("#cbNavAgentBtn") || t.closest("#cbDrawerAgentBtn") || t.closest("[data-agent-modal]")) { openAgentModal(); closeDrawer(); }
       if (t.closest("#agentModalClose") || t.closest("#agentModalScrim") || t.closest("#agentDoneBtn")) { closeAgentModal(); }
