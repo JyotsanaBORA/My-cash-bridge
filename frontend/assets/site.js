@@ -629,7 +629,7 @@
       '<span class="nav-spacer"></span>' +
       '<div class="nav-actions">' +
         '<div class="lang-toggle" data-no-i18n><button data-l="en" data-setlang="en">EN</button><button data-l="hi" data-setlang="hi">\u0939\u093F\u0902</button></div>' +
-        '<a class="nav-tel" href="tel:' + CFG.phoneRaw + '"><i data-lucide="phone-call"></i> ' + CFG.phone + '</a>' +
+        /* '<a class="nav-tel" href="tel:' + CFG.phoneRaw + '"><i data-lucide="phone-call"></i> ' + CFG.phone + '</a>' + */
         '<button class="btn btn-filled btn-sm nav-apply-btn" data-apply data-i18n="nav.apply">Apply now</button>' +
         '<button class="btn btn-outline btn-sm nav-download-btn nav-refer-btn" id="cbNavReferBtn"><i data-lucide="share-2"></i> Refer Now</button>' +
         '<button class="btn btn-outline btn-sm nav-agent-btn" id="cbNavAgentBtn"><i data-lucide="briefcase"></i> Become an Agent</button>' +
