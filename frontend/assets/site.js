@@ -356,6 +356,10 @@
      ============================================================ */
   var HI = {
     // ---- top strip / nav ----
+    "New here? Check your credit score in 10 seconds — it won't affect your score.": "नए हैं? 10 सेकंड में अपना क्रेडिट स्कोर जांचें — इससे आपके स्कोर पर असर नहीं पड़ता।",
+    "New here? Check your free CIBIL score in 10 seconds — it won't affect your score.": "नए हैं? 10 सेकंड में अपना मुफ्त CIBIL स्कोर जांचें — इससे आपके स्कोर पर असर नहीं पड़ता।",
+    "New here? Check your credit score in 10 seconds — it won't affect your credit score.": "नए हैं? 10 सेकंड में अपना क्रेडिट स्कोर जांचें — इससे आपके क्रेडिट स्कोर पर असर नहीं पड़ता।",
+    "New here? Check your eligibility in 10 seconds — it won't affect your credit score.": "नए हैं? 10 सेकंड में अपनी पात्रता जांचें — इससे आपके क्रेडिट स्कोर पर असर नहीं पड़ता।",
     "New here? Check your eligibility in 10 seconds \u25C6 it won't affect your credit score.": "\u0928\u092F\u093E \u0939\u0948\u0902? 10 \u0938\u0947\u0915\u0902\u0921 \u092E\u0947\u0902 \u0905\u092A\u0928\u0940 \u092A\u093E\u0924\u094D\u0930\u0924\u093E \u091C\u093E\u0928\u0947\u0902 \u2014 \u0906\u092A\u0915\u093E \u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0938\u094D\u0915\u094B\u0930 \u092A\u094D\u0930\u092D\u093E\u0935\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u094B\u0917\u093E",
     "Check now": "\u0905\u092D\u0940 \u091C\u093E\u0902\u091A\u0947\u0902",
     "Loans": "\u0932\u094B\u0928", "Credit Cards": "\u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0915\u093E\u0930\u094D\u0921", "Loans and Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Loans & Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Insurance": "\u092C\u0940\u092E\u093E", "Investments": "\u0928\u093F\u0935\u0947\u0936", "Bookkeeping": "\u092C\u0941\u0915\u0915\u0940\u092A\u093F\u0902\u0917", "Finance & Accounting": "\u0935\u093F\u0924\u094D\u0924 \u0914\u0930 \u0932\u0947\u0916\u093E", "Finance and Accounting": "\u0935\u093F\u0924\u094D\u0924 \u0914\u0930 \u0932\u0947\u0916\u093E", "Tools": "\u091F\u0942\u0932\u094D\u0938",
@@ -614,8 +618,8 @@
   }
   function navHTML() {
     return '' +
-    '<div class="topstrip"><span data-i18n="top.msg">New here? Check your eligibility in 10 seconds — it won\'t affect your credit score.</span>' +
-      '<a href="' + BASE + 'tools/eligibility.html" data-i18n="top.cta">Check now</a></div>' +
+    '<div class="topstrip" onclick="if(!event.target.closest(\'a\')) { var cs=document.getElementById(\'csCard\'); if(cs){ cs.scrollIntoView({behavior:\'smooth\',block:\'start\'}); } else { window.location.href=\'' + BASE + 'tools/credit-score.html\'; } }"><span data-i18n="top.msg">New here? Check your credit score in 10 seconds — it won\'t affect your score.</span>' +
+      '<a href="' + BASE + 'tools/credit-score.html" data-i18n="top.cta">Check now</a></div>' +
     '<header class="nav"><div class="nav-inner">' +
       '<a class="nav-logo cb-logo-link" href="' + BASE + 'index.html">' + logoLockup() + '</a>' +
       '<nav class="nav-links">' +
@@ -1515,6 +1519,17 @@
       if (t.closest("#referModalClose") || t.closest("#referModalScrim")) { closeReferModal(); }
       if (t.closest("#cbNavAgentBtn") || t.closest("#cbDrawerAgentBtn") || t.closest("[data-agent-modal]")) { openAgentModal(); closeDrawer(); }
       if (t.closest("#agentModalClose") || t.closest("#agentModalScrim") || t.closest("#agentDoneBtn")) { closeAgentModal(); }
+      var topCta = t.closest(".topstrip a");
+      if (topCta && /\/tools\/credit-score(\.html)?$/.test(location.pathname.replace(/\/$/, ""))) {
+        e.preventDefault();
+        var csCard = document.getElementById("csCard") || document.getElementById("cibilForm");
+        if (csCard) {
+          csCard.scrollIntoView({ behavior: "smooth", block: "start" });
+          var fInp = csCard.querySelector("input:not([type=hidden])");
+          if (fInp) setTimeout(function () { fInp.focus(); }, 350);
+        }
+        return;
+      }
       if (t.closest("[data-cibil-check]") || t.closest("[data-cibil-modal]")) { e.preventDefault(); openCibilModal(); closeDrawer(); }
       if (t.closest("#cibilModalClose") || t.closest("#cibilModalScrim")) { closeCibilModal(); }
       if (t.closest("#modalCibilCheckAgainBtn")) { resetCibilModal(); }
