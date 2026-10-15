@@ -78,7 +78,15 @@
     ["tools/compare", "Compare Loans", "scale"],
     ["guides/index", "Guides & Articles", "book-open"]
   ];
+  var BOOKKEEPING = [
+    // services will be added later
+  ];
+  var FINANCE_ACCOUNTING = [
+    // services will be added later
+  ];
   window.CB_LOANS = LOANS;
+  window.CB_BOOKKEEPING = BOOKKEEPING;
+  window.CB_FINANCE_ACCOUNTING = FINANCE_ACCOUNTING;
 
   /* ------------------------------------------------------------
      Partner network data (banks/NBFCs/HFCs/SFBs)
@@ -350,7 +358,7 @@
     // ---- top strip / nav ----
     "New here? Check your eligibility in 10 seconds \u25C6 it won't affect your credit score.": "\u0928\u092F\u093E \u0939\u0948\u0902? 10 \u0938\u0947\u0915\u0902\u0921 \u092E\u0947\u0902 \u0905\u092A\u0928\u0940 \u092A\u093E\u0924\u094D\u0930\u0924\u093E \u091C\u093E\u0928\u0947\u0902 \u2014 \u0906\u092A\u0915\u093E \u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0938\u094D\u0915\u094B\u0930 \u092A\u094D\u0930\u092D\u093E\u0935\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u094B\u0917\u093E",
     "Check now": "\u0905\u092D\u0940 \u091C\u093E\u0902\u091A\u0947\u0902",
-    "Loans": "\u0932\u094B\u0928", "Credit Cards": "\u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0915\u093E\u0930\u094D\u0921", "Loans and Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Loans & Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Insurance": "\u092C\u0940\u092E\u093E", "Investments": "\u0928\u093F\u0935\u0947\u0936", "Tools": "\u091F\u0942\u0932\u094D\u0938",
+    "Loans": "\u0932\u094B\u0928", "Credit Cards": "\u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0915\u093E\u0930\u094D\u0921", "Loans and Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Loans & Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Insurance": "\u092C\u0940\u092E\u093E", "Investments": "\u0928\u093F\u0935\u0947\u0936", "Bookkeeping": "\u092C\u0941\u0915\u0915\u0940\u092A\u093F\u0902\u0917", "Finance & Accounting": "\u0935\u093F\u0924\u094D\u0924 \u0914\u0930 \u0932\u0947\u0916\u093E", "Finance and Accounting": "\u0935\u093F\u0924\u094D\u0924 \u0914\u0930 \u0932\u0947\u0916\u093E", "Tools": "\u091F\u0942\u0932\u094D\u0938",
     "Apply now": "\u0905\u092D\u0940 \u0906\u0935\u0947\u0926\u0928 \u0915\u0930\u0947\u0902", "About Us": "\u0939\u092E\u093E\u0930\u0947 \u092C\u093E\u0930\u0947 \u092E\u0947\u0902", "Contact Us": "\u0938\u0902\u092A\u0930\u094D\u0915 \u0915\u0930\u0947\u0902", "Call": "\u0915\u0949\u0932 \u0915\u0930\u0947\u0902",
     // ---- product names ----
     "Personal Loan": "\u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0932\u094B\u0928", "Business Loan": "\u0935\u094D\u092F\u093E\u092A\u093E\u0930 \u0932\u094B\u0928", "Home Loan": "\u0939\u094B\u092E \u0932\u094B\u0928",
@@ -580,6 +588,9 @@
     }).join("");
   }
   function dropdown(label, key, overviewHref, items, compact) {
+    if (!items || !items.trim()) {
+      return '<span class="nav-item"><a class="nav-link" href="' + overviewHref + '" data-i18n="' + key + '">' + label + '</a></span>';
+    }
     return '<span class="nav-item"><a class="nav-link" href="' + overviewHref + '" data-i18n="' + key + '">' + label + ' <i data-lucide="chevron-down"></i></a>' +
       '<div class="nav-drop' + (compact ? ' compact' : '') + '"><div class="nav-drop-grid">' + items + '</div></div></span>';
   }
@@ -611,6 +622,8 @@
         dropdownLoansAndCards() +
         dropdown("Insurance", "nav.insurance", BASE + "pages/insurance.html", dropItems(INSURANCE, "pages"), true) +
         dropdown("Investments", "nav.invest", BASE + "pages/investments.html", dropItems(INVEST, "pages"), true) +
+        dropdown("Bookkeeping", "nav.bookkeeping", BASE + "pages/bookkeeping.html", dropItems(BOOKKEEPING, "pages"), true) +
+        dropdown("Finance & Accounting", "nav.finance_accounting", BASE + "pages/finance-accounting.html", dropItems(FINANCE_ACCOUNTING, "pages"), true) +
         dropdown("Tools", "nav.tools", BASE + "tools/emi-calculator.html", dropItems(TOOLS, "tools"), true) +
       '</nav>' +
       '<span class="nav-spacer"></span>' +
@@ -626,6 +639,11 @@
   }
 
   function drawerAcc(title, items, folder) {
+    if (!items || !items.length) {
+      var slug = title === "Bookkeeping" ? "bookkeeping" : (title.indexOf("Finance") >= 0 ? "finance-accounting" : title.toLowerCase());
+      var href = folder === "tools" ? (BASE + "tools/emi-calculator.html") : (BASE + folder + "/" + slug + ".html");
+      return '<div class="drawer-group"><a href="' + href + '">' + title + '</a></div>';
+    }
     var links = items.map(function (l) {
       var href = folder === "tools" ? (BASE + l[0] + ".html") : (BASE + folder + "/" + l[0] + ".html" + (folder === "loans" ? "?apply=1" : ""));
       return '<a href="' + href + '">' + l[1] + '</a>';
@@ -655,6 +673,8 @@
       drawerLoansAndCards() +
       drawerAcc("Insurance", INSURANCE, "pages") +
       drawerAcc("Investments", INVEST, "pages") +
+      drawerAcc("Bookkeeping", BOOKKEEPING, "pages") +
+      drawerAcc("Finance & Accounting", FINANCE_ACCOUNTING, "pages") +
       drawerAcc("Tools", TOOLS, "tools") +
       '<div class="drawer-group"><a href="' + BASE + 'pages/about.html">About Us</a></div>' +
       '<div class="drawer-group"><a href="' + BASE + 'pages/contact.html">Contact Us</a></div>' +
