@@ -350,7 +350,7 @@
     // ---- top strip / nav ----
     "New here? Check your eligibility in 10 seconds \u25C6 it won't affect your credit score.": "\u0928\u092F\u093E \u0939\u0948\u0902? 10 \u0938\u0947\u0915\u0902\u0921 \u092E\u0947\u0902 \u0905\u092A\u0928\u0940 \u092A\u093E\u0924\u094D\u0930\u0924\u093E \u091C\u093E\u0928\u0947\u0902 \u2014 \u0906\u092A\u0915\u093E \u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0938\u094D\u0915\u094B\u0930 \u092A\u094D\u0930\u092D\u093E\u0935\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u094B\u0917\u093E",
     "Check now": "\u0905\u092D\u0940 \u091C\u093E\u0902\u091A\u0947\u0902",
-    "Loans": "\u0932\u094B\u0928", "Credit Cards": "\u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0915\u093E\u0930\u094D\u0921", "Insurance": "\u092C\u0940\u092E\u093E", "Investments": "\u0928\u093F\u0935\u0947\u0936", "Tools": "\u091F\u0942\u0932\u094D\u0938",
+    "Loans": "\u0932\u094B\u0928", "Credit Cards": "\u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0915\u093E\u0930\u094D\u0921", "Loans and Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Loans & Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Insurance": "\u092C\u0940\u092E\u093E", "Investments": "\u0928\u093F\u0935\u0947\u0936", "Tools": "\u091F\u0942\u0932\u094D\u0938",
     "Apply now": "\u0905\u092D\u0940 \u0906\u0935\u0947\u0926\u0928 \u0915\u0930\u0947\u0902", "About Us": "\u0939\u092E\u093E\u0930\u0947 \u092C\u093E\u0930\u0947 \u092E\u0947\u0902", "Contact Us": "\u0938\u0902\u092A\u0930\u094D\u0915 \u0915\u0930\u0947\u0902", "Call": "\u0915\u0949\u0932 \u0915\u0930\u0947\u0902",
     // ---- product names ----
     "Personal Loan": "\u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0932\u094B\u0928", "Business Loan": "\u0935\u094D\u092F\u093E\u092A\u093E\u0930 \u0932\u094B\u0928", "Home Loan": "\u0939\u094B\u092E \u0932\u094B\u0928",
@@ -583,6 +583,24 @@
     return '<span class="nav-item"><a class="nav-link" href="' + overviewHref + '" data-i18n="' + key + '">' + label + ' <i data-lucide="chevron-down"></i></a>' +
       '<div class="nav-drop' + (compact ? ' compact' : '') + '"><div class="nav-drop-grid">' + items + '</div></div></span>';
   }
+  function dropdownLoansAndCards() {
+    var loanItems = dropItems(LOANS, "loans");
+    var cardItems = dropItems(CARDS, "pages");
+    return '<span class="nav-item"><a class="nav-link" href="' + BASE + 'index.html#loans" data-i18n="nav.loans_cards">Loans and Cards <i data-lucide="chevron-down"></i></a>' +
+      '<div class="nav-drop nav-drop-merged">' +
+        '<div class="nav-drop-cols">' +
+          '<div class="nav-drop-col">' +
+            '<div class="nav-drop-col-head">Loans</div>' +
+            loanItems +
+          '</div>' +
+          '<div class="nav-drop-col-divider"></div>' +
+          '<div class="nav-drop-col">' +
+            '<div class="nav-drop-col-head">Credit Cards</div>' +
+            cardItems +
+          '</div>' +
+        '</div>' +
+      '</div></span>';
+  }
   function navHTML() {
     return '' +
     '<div class="topstrip"><span data-i18n="top.msg">New here? Check your eligibility in 10 seconds — it won\'t affect your credit score.</span>' +
@@ -590,8 +608,7 @@
     '<header class="nav"><div class="nav-inner">' +
       '<a class="nav-logo cb-logo-link" href="' + BASE + 'index.html">' + logoLockup() + '</a>' +
       '<nav class="nav-links">' +
-        dropdown("Loans", "nav.loans", BASE + "index.html#loans", dropItems(LOANS, "loans")) +
-        dropdown("Credit Cards", "nav.cards", BASE + "pages/credit-cards.html", dropItems(CARDS, "pages"), true) +
+        dropdownLoansAndCards() +
         dropdown("Insurance", "nav.insurance", BASE + "pages/insurance.html", dropItems(INSURANCE, "pages"), true) +
         dropdown("Investments", "nav.invest", BASE + "pages/investments.html", dropItems(INVEST, "pages"), true) +
         dropdown("Tools", "nav.tools", BASE + "tools/emi-calculator.html", dropItems(TOOLS, "tools"), true) +
@@ -615,12 +632,27 @@
     }).join("");
     return '<div class="drawer-group drawer-acc"><div class="drawer-acc-head" data-acc>' + title + ' <i data-lucide="chevron-down" class="chev"></i></div><div class="drawer-acc-body">' + links + '</div></div>';
   }
+  function drawerLoansAndCards() {
+    var loanLinks = LOANS.map(function (l) {
+      return '<a href="' + BASE + 'loans/' + l[0] + '.html?apply=1">' + l[1] + '</a>';
+    }).join("");
+    var cardLinks = CARDS.map(function (l) {
+      return '<a href="' + BASE + 'pages/' + l[0] + '.html">' + l[1] + '</a>';
+    }).join("");
+    return '<div class="drawer-group drawer-acc">' +
+      '<div class="drawer-acc-head" data-acc>Loans and Cards <i data-lucide="chevron-down" class="chev"></i></div>' +
+      '<div class="drawer-acc-body">' +
+        '<div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--green-primary);padding:8px 4px 4px 16px">Loans</div>' +
+        loanLinks +
+        '<div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--green-primary);padding:14px 4px 4px 16px">Credit Cards</div>' +
+        cardLinks +
+      '</div></div>';
+  }
   function drawerHTML() {
     return '<div class="drawer" id="drawer"><div class="drawer-scrim" data-drawer-close></div><div class="drawer-panel">' +
       '<div class="drawer-head">' + logoLockup() + '<button class="drawer-close" data-drawer-close><i data-lucide="x"></i></button></div>' +
       '<div class="drawer-group" style="display:flex;gap:8px;border-top:none"><div class="lang-toggle" data-no-i18n><button data-l="en" data-setlang="en">EN</button><button data-l="hi" data-setlang="hi">\u0939\u093F\u0902</button></div></div>' +
-      drawerAcc("Loans", LOANS, "loans") +
-      drawerAcc("Credit Cards", CARDS, "pages") +
+      drawerLoansAndCards() +
       drawerAcc("Insurance", INSURANCE, "pages") +
       drawerAcc("Investments", INVEST, "pages") +
       drawerAcc("Tools", TOOLS, "tools") +
