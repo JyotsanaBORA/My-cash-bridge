@@ -54,7 +54,7 @@ src="https://www.facebook.com/tr?id=2554292998349367&ev=PageView&noscript=1"
 <meta name="description" content="MyCashBridge is a money lending service provider offering personal, business, home, gold and more loans with clear EMIs and honest rates. Check your eligibility in 10 seconds." />
 <link rel="icon" href="assets/logo-cashbridge-mark.svg" />
 <meta name="ext-resource-dependency" content="assets/logo-cashbridge.svg" data-resource-id="cbLogo" />
-<link rel="stylesheet" href="assets/site.css?v=6" />
+<link rel="stylesheet" href="assets/site.css?v=8" />
 <script src="assets/lucide.min.js"></script>
 <style>
   /* hero switcher (preview-only control to pick a direction) */
@@ -88,23 +88,41 @@ src="https://www.facebook.com/tr?id=2554292998349367&ev=PageView&noscript=1"
   .hero-stat .s b { font-size: 28px; font-weight: 800; color: var(--green-primary); letter-spacing: -.02em; display:block; }
   .hero-stat .s span { font-size: 13px; color: var(--text-soft); font-weight: 600; }
 
-  /* hero A &ndash; mascot beside the EMI calculator */
-  .emi-zone { position: relative; }
-  .emi-zone .emi { position: relative; z-index: 2; }
-  .emi-figure { position: absolute; left: -178px; bottom: -16px; width: 178px; z-index: 4;
+  /* hero A – compact top margin & 20% reduced EMI card */
+  .hero-variant[data-hero="A"] { padding-top: 18px; padding-bottom: 52px; }
+  .hero-variant[data-hero="A"] .hero-grid { grid-template-columns: 1.25fr 0.75fr; gap: 46px; align-items: center; }
+  .hero-variant[data-hero="A"] .h-hero { margin-top: 12px; }
+
+  /* EMI card &ndash; 20% reduced size */
+  .emi-zone { position: relative; max-width: 358px; justify-self: end; width: 100%; margin-left: auto; }
+  .emi-zone .emi { position: relative; z-index: 2; padding: 22px; }
+  .emi-zone .emi .eyebrow { font-size: 11px; }
+  .emi-zone .emi .emi-row { margin-top: 10px !important; }
+  .emi-zone .emi .emi-row .k { font-size: 12px; }
+  .emi-zone .emi .emi-row .v { font-size: 18px; }
+  .emi-zone .emi input[type=range] { margin-top: 6px; height: 5px; }
+  .emi-zone .emi .emi-out { padding: 13px 16px; margin-top: 15px; border-radius: 12px; }
+  .emi-zone .emi .emi-out .big { font-size: 22px; }
+  .emi-zone .emi .emi-out .small { font-size: 11px; margin-top: 6px; }
+  .emi-zone .emi .btn { padding: 9px 18px; font-size: 14px; margin-top: 13px !important; }
+  .emi-zone .emi .emi-note { font-size: 11px; margin-top: 8px; }
+
+  /* mascot beside the 20% reduced EMI card */
+  .emi-figure { position: absolute; left: -145px; bottom: -12px; width: 145px; z-index: 4;
     display: flex; flex-direction: column; align-items: center; pointer-events: none; user-select: none; }
   .emi-mascot { width: 100%; height: auto; transform-origin: center bottom;
-    filter: drop-shadow(0 16px 22px rgba(10,94,58,.16)); }
-  .emi-speech { position: relative; margin-bottom: 8px; background: var(--green-primary); color: #fff;
-    font-weight: 700; font-size: 13px; line-height: 1.32; text-align: center; padding: 10px 12px;
-    border-radius: 14px; box-shadow: 0 10px 22px rgba(10,94,58,.22); }
-  .emi-speech::after { content: ""; position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%);
-    border: 7px solid transparent; border-top-color: var(--green-primary); border-bottom: 0; }
-  @media (max-width: 1180px) { .emi-figure { width: 150px; left: -138px; } .emi-speech { font-size: 12px; } }
+    filter: drop-shadow(0 14px 18px rgba(10,94,58,.16)); }
+  .emi-speech { position: relative; margin-bottom: 6px; background: var(--green-primary); color: #fff;
+    font-weight: 700; font-size: 11px; line-height: 1.3; text-align: center; padding: 7px 10px;
+    border-radius: 12px; box-shadow: 0 8px 18px rgba(10,94,58,.22); }
+  .emi-speech::after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%);
+    border: 6px solid transparent; border-top-color: var(--green-primary); border-bottom: 0; }
+  @media (max-width: 1180px) { .emi-figure { width: 120px; left: -115px; } .emi-speech { font-size: 10.5px; } }
   @media (max-width: 980px) {
-    .emi-zone { display: flex; flex-direction: column; align-items: center; }
-    .emi-zone .emi { width: 100%; }
-    .emi-figure { position: static; width: 190px; margin: 0 auto -6px; }
+    .hero-variant[data-hero="A"] .hero-grid { grid-template-columns: 1fr; }
+    .emi-zone { max-width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+    .emi-zone .emi { width: 100%; max-width: 360px; }
+    .emi-figure { position: static; width: 150px; margin: 0 auto -6px; }
     .emi-speech { display: none; }
   }
 </style>
@@ -136,7 +154,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="wrap hero-grid">
     <div>
       <span class="pill pill-approved"><i data-lucide="shield-check"></i> Compare &amp; apply from 128+ banks &amp; NBFCs</span>
-      <h1 class="h-hero" style="margin-top:18px">Borrow with<br>a clear head.</h1>
+      <h1 class="h-hero" style="margin-top:12px">Borrow with<br>a clear head.</h1>
       <div class="hero-tagline">Aapke Sapno Ka Financial Saathi</div>
       <p class="sub">Compare and apply for personal, business, home and gold loans from India's leading banks &amp; NBFCs &ndash; with EMIs you choose and a total you can see before you sign.</p>
       <!-- Why-choose-us trust points embedded in hero -->
@@ -164,15 +182,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="emi" data-emi data-rate="10.5">
       <div class="eyebrow">Estimate your EMI</div>
-      <div class="emi-row" style="margin-top:14px"><span class="k">Loan amount</span><span class="v" data-emi-amount-out>&#x20B9;2,00,000</span></div>
+      <div class="emi-row" style="margin-top:10px"><span class="k">Loan amount</span><span class="v" data-emi-amount-out>&#x20B9;2,00,000</span></div>
       <input type="range" min="25000" max="2000000" step="5000" value="200000" data-emi-amount>
-      <div class="emi-row" style="margin-top:16px"><span class="k">Tenure</span><span class="v" data-emi-months-out>24 months</span></div>
+      <div class="emi-row" style="margin-top:11px"><span class="k">Tenure</span><span class="v" data-emi-months-out>24 months</span></div>
       <input type="range" min="6" max="84" step="6" value="24" data-emi-months>
       <div class="emi-out">
         <div class="emi-row"><span class="k" style="color:var(--text-on-aqua-soft)">Your Easy Monthly Installment = </span><span class="big" data-emi-out>&#x20B9;9,264</span></div>
         <div class="emi-out small"><span data-emi-rate>10.5% p.a.</span> &ndash; all-in<span data-emi-total>&#x20B9;2,22,336</span></div>
       </div>
-      <button class="btn btn-filled btn-block" data-apply data-quick-apply data-qb-flow="general" style="margin-top:16px">Check your rate</button>
+      <button class="btn btn-filled btn-block" data-apply data-quick-apply data-qb-flow="general" style="margin-top:12px">Check your rate</button>
       <div class="emi-note">Checking your rate won't affect your credit score.</div>
     </div>
   </div>
@@ -596,7 +614,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div data-mount="footer"></div>
 
 <script src="assets/image-slot.js"></script>
-<script src="assets/site.js?v=7"></script>
+<script src="assets/site.js?v=8"></script>
 <script>
   // ---- products grid ----
   (function () {

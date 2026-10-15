@@ -187,7 +187,7 @@ h1,h2,h3 { letter-spacing: -.01em; margin: 0; }
 /* ============================================================
    HERO (shared) + EMI widget
    ============================================================ */
-.hero { background: var(--canvas); padding: 64px 0 72px; }
+.hero { background: var(--canvas); padding: 28px 0 60px; }
 .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
 .hero p.sub { font-size: 19px; line-height: 1.65; color: var(--text-strong); max-width: 470px; margin: 20px 0 0; }
 /* Hero-embedded trust checkpoints */
