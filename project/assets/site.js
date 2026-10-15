@@ -72,6 +72,8 @@
      ============================================================ */
   var HI = {
     // ---- top strip / nav ----
+    "New here? Check your credit score in 10 seconds — it won't affect your score.": "नए हैं? 10 सेकंड में अपना क्रेडिट स्कोर जांचें — इससे आपके स्कोर पर असर नहीं पड़ता।",
+    "New here? Check your credit score in 10 seconds — it won't affect your credit score.": "नए हैं? 10 सेकंड में अपना क्रेडिट स्कोर जांचें — इससे आपके क्रेडिट स्कोर पर असर नहीं पड़ता।",
     "New here? Check your eligibility in 10 seconds — it won't affect your credit score.": "नए हैं? 10 सेकंड में अपनी पात्रता जांचें — इससे आपके क्रेडिट स्कोर पर असर नहीं पड़ता।",
     "Check now": "अभी जांचें",
     "Loans": "लोन", "Credit Cards": "क्रेडिट कार्ड", "Insurance": "बीमा", "Investments": "निवेश", "Tools": "टूल्स",
@@ -388,8 +390,8 @@
   }
   function navHTML() {
     return '' +
-    '<div class="topstrip"><span data-i18n="top.msg">New here? Check your eligibility in 10 seconds — it won\'t affect your credit score.</span>' +
-      '<a href="' + BASE + 'tools/eligibility.html" data-i18n="top.cta">Check now</a></div>' +
+    '<div class="topstrip" onclick="if(!event.target.closest(\'a\')) window.location.href=\'' + BASE + 'tools/credit-score.html\';"><span data-i18n="top.msg">New here? Check your credit score in 10 seconds — it won\'t affect your score.</span>' +
+      '<a href="' + BASE + 'tools/credit-score.html" data-i18n="top.cta">Check now</a></div>' +
     '<header class="nav"><div class="nav-inner">' +
       '<a class="nav-logo lockup" href="' + BASE + 'index.html"><img src="' + LOGO_SRC() + '" alt="' + CFG.brand + '"><span class="nav-tagline">' + CFG.tagline + '</span></a>' +
       '<nav class="nav-links">' +
