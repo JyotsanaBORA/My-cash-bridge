@@ -110,7 +110,7 @@ h1,h2,h3 { letter-spacing: -.01em; margin: 0; }
 
 .nav { position: sticky; top: 0; z-index: 60; background: var(--white); box-shadow: var(--shadow-nav); }
 .nav-inner { max-width: 1440px; margin: 0 auto; height: 72px; padding: 0 24px; display: flex; align-items: center; gap: 12px; box-sizing: border-box; width: 100%; }
-.nav-logo img { height: 110px; }
+.nav-logo img { height: 38px; width: auto; }
 .nav-links { display: flex; align-items: center; gap: 4px; margin: 0; flex-shrink: 0; }
 .nav-links > * { position: relative; display: flex; align-items: center; }
 .nav-link { color: var(--text-strong); font-size: 13.5px; font-weight: 600; text-decoration: none; cursor: pointer;
@@ -1688,13 +1688,13 @@ input.qb-range {
 
 /* ---------- split lockup: MCB mark + separate wordmark ---------- */
 .cb-logo-link { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; margin-right: 22px; }
-.cb-logo { display:flex; align-items:center; gap:10px; }
-.cb-mark { height:38px; width:auto; display:block; flex:none; }
-/* beat the legacy ".nav-logo img { height:110px }" rule */
-.cb-word { display: flex; flex-direction: column; justify-content: center; line-height: 1.2; gap: 5px; }
-.cb-name { font-weight: 800; font-size: 21px; letter-spacing: -.02em; color: var(--green-primary); white-space: nowrap; line-height: 1.1; }
+.cb-logo { display: flex; align-items: center; gap: 10px; }
+.cb-mark { height: 38px; width: auto; display: block; flex: none; }
+.nav-logo .cb-mark { height: 38px; }
+.cb-word { display: flex; flex-direction: column; justify-content: center; line-height: 1.05; }
+.cb-name { font-weight: 800; font-size: 20px; letter-spacing: -.02em; color: var(--green-primary); white-space: nowrap; line-height: 1; }
 .cb-tld { font-size: .58em; font-weight: 700; color: var(--green-accent); letter-spacing: 0; }
-.cb-tag { font-size: 10.5px; font-weight: 600; font-style: italic; letter-spacing: .01em; color: var(--text-soft); white-space: nowrap; line-height: 1.2; display: block; margin-top: 2px; }
+.cb-tag { font-size: 10px; font-weight: 600; font-style: italic; letter-spacing: .01em; color: var(--text-soft); white-space: nowrap; line-height: 1; display: block; margin-top: 3px; }
 @media (max-width:520px){ .cb-mark, .nav-logo .cb-mark { height:34px; } .cb-name { font-size:19px; } .cb-tag { font-size:10px; } }
 /* footer variant (larger, on aqua) */
 .cb-logo-foot .cb-mark { height:50px; }
