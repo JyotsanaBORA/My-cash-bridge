@@ -2668,3 +2668,86 @@ p, li, td, dd { overflow-wrap: break-word; word-break: break-word; }
 }
 .qb-expert-icon i, .qb-expert-icon svg { width: 18px; height: 18px; }
 .qb-results-disclaimer { font-size: 10px; color: #bbb; line-height: 1.6; margin: 0; text-align: center; }
+
+/* ============================================================
+   CIBIL SCORE CHECK — SIGNZY BUREAU INTEGRATION
+   ============================================================ */
+.cibil-card { background: var(--white); border-radius: var(--radius-card); box-shadow: var(--shadow-card), 0 20px 45px rgba(0,0,0,.07); padding: 28px; }
+.cibil-card h3 { font-size: 22px; font-weight: 700; color: var(--green-primary); margin-top: 6px; }
+.cibil-card p.sub { font-size: 13.5px; color: var(--text-soft); margin: 6px 0 18px; line-height: 1.45; }
+.cibil-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cibil-grid .field.full { grid-column: 1 / -1; }
+.cibil-field { display: flex; flex-direction: column; gap: 4px; }
+.cibil-field label { font-size: 11.5px; font-weight: 700; color: var(--text-strong); text-transform: uppercase; letter-spacing: .05em; }
+.cibil-field input, .cibil-field select {
+  width: 100%; height: 42px; border: 1.5px solid var(--hairline); border-radius: 10px; padding: 0 12px;
+  font-size: 14px; font-weight: 600; color: var(--text-strong); background: var(--white); transition: all .18s ease;
+  font-family: var(--font-sans); box-sizing: border-box;
+}
+.cibil-field input:focus, .cibil-field select:focus {
+  outline: none; border-color: var(--green-accent); box-shadow: 0 0 0 3px rgba(12,122,78,.12);
+}
+.cibil-field .tel-wrap { display: flex; border: 1.5px solid var(--hairline); border-radius: 10px; overflow: hidden; }
+.cibil-field .tel-wrap .cc {
+  background: var(--canvas); color: var(--text-soft); font-weight: 700; font-size: 13px;
+  padding: 0 10px; display: flex; align-items: center; border-right: 1px solid var(--hairline); flex-shrink: 0;
+}
+.cibil-field .tel-wrap input { border: none; border-radius: 0; }
+.cibil-field .tel-wrap:focus-within { border-color: var(--green-accent); box-shadow: 0 0 0 3px rgba(12,122,78,.12); }
+.cibil-disclaimer {
+  background: var(--aqua); border-radius: 10px; padding: 10px 12px; margin-top: 14px;
+  display: flex; gap: 8px; font-size: 11.5px; color: var(--green-deep); line-height: 1.4; align-items: flex-start;
+}
+.cibil-disclaimer i, .cibil-disclaimer svg { width: 16px; height: 16px; flex-shrink: 0; color: var(--green-primary); margin-top: 1px; }
+.cibil-err-banner {
+  background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; border-radius: 10px;
+  padding: 10px 12px; font-size: 13px; font-weight: 600; margin-bottom: 12px;
+}
+
+/* Loading State */
+.cibil-loading { text-align: center; padding: 36px 16px; }
+.cibil-spinner-wrap { position: relative; width: 72px; height: 72px; margin: 0 auto 18px; }
+.cibil-spinner {
+  width: 100%; height: 100%; border: 4px solid var(--aqua); border-top-color: var(--brand-lime);
+  border-right-color: var(--green-primary); border-radius: 50%; animation: cibilSpin 1s cubic-bezier(.55,.15,.45,.85) infinite;
+}
+@keyframes cibilSpin { to { transform: rotate(360deg); } }
+.cibil-loading-text { font-size: 16px; font-weight: 700; color: var(--green-primary); }
+.cibil-loading-sub { font-size: 13px; color: var(--text-soft); margin-top: 6px; }
+
+/* Results State */
+.cibil-result { text-align: center; }
+.cibil-result-head {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .08em; color: var(--green-accent); background: var(--lime-soft);
+  padding: 4px 12px; border-radius: 50px; margin-bottom: 8px;
+}
+.cibil-result-head i, .cibil-result-head svg { width: 14px; height: 14px; }
+.cibil-result-name { font-size: 18px; font-weight: 800; color: var(--green-primary); letter-spacing: -.01em; margin-bottom: 4px; }
+.cibil-gauge-box { margin: 8px auto 12px; text-align: center; }
+.cibil-gauge-svg { width: 260px; max-width: 100%; overflow: visible; }
+.cibil-gauge-svg .track { fill: none; stroke: var(--ceramic); stroke-width: 16; stroke-linecap: round; }
+.cibil-gauge-svg .prog { fill: none; stroke: url(#cibilGrad); stroke-width: 16; stroke-linecap: round; stroke-dasharray: 439; stroke-dashoffset: 439; transition: stroke-dashoffset 1.4s var(--ease-expander); }
+.cibil-score-val { font-size: 54px; font-weight: 800; color: var(--green-primary); line-height: 1; letter-spacing: -.03em; margin-top: -26px; }
+.cibil-score-pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 50px;
+  font-size: 13px; font-weight: 800; color: #fff; margin-top: 6px;
+}
+.cibil-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; text-align: left; }
+.cibil-summary-card {
+  background: var(--canvas); border-radius: 12px; padding: 14px; border: 1px solid var(--hairline);
+}
+.cibil-summary-card .head {
+  display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .06em; color: var(--green-primary); margin-bottom: 10px;
+}
+.cibil-summary-card .head i, .cibil-summary-card .head svg { width: 14px; height: 14px; color: var(--green-accent); }
+.cibil-stat-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,.06); }
+.cibil-stat-row:last-child { border-bottom: none; }
+.cibil-stat-row .k { color: var(--text-soft); }
+.cibil-stat-row .v { font-weight: 700; color: var(--text-strong); }
+
+@media (max-width: 600px) {
+  .cibil-grid, .cibil-summary-grid { grid-template-columns: 1fr; }
+  .cibil-card { padding: 20px 16px; }
+}

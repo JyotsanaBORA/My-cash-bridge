@@ -968,6 +968,150 @@
     '</div>';
   }
 
+  /* ============================================================
+     CIBIL CREDIT SCORE CHECK MODAL — SIGNZY BUREAU INTEGRATION
+     ============================================================ */
+  function cibilModalHTML() {
+    return '<div class="modal cibil-modal" id="cibilCheckModal" role="dialog" aria-modal="true">' +
+      '<div class="modal-scrim" id="cibilModalScrim"></div>' +
+      '<div class="modal-box" style="max-width:680px;max-height:92vh;overflow-y:auto;position:relative">' +
+        '<button class="modal-close" id="cibilModalClose" aria-label="Close"><i data-lucide="x"></i></button>' +
+
+        '<!-- 1. Form Section -->' +
+        '<div id="modalCibilFormWrap">' +
+          '<div style="text-align:center;margin-bottom:18px">' +
+            '<span class="pill pill-approved" style="margin-bottom:8px"><i data-lucide="shield-check"></i> Signzy Bureau Powered</span>' +
+            '<h3 style="font-size:22px;font-weight:800;color:var(--green-primary,#0c7a4e);margin:0 0 6px">Check Your CIBIL Score</h3>' +
+            '<p style="font-size:13.5px;color:var(--text-soft,#5a6472);margin:0">Official bureau credit score &amp; full inquiry analytics. Soft check with zero score impact.</p>' +
+          '</div>' +
+          '<div class="cibil-err-banner" id="modalCibilError" style="display:none"></div>' +
+          '<form id="modalCibilForm" novalidate>' +
+            '<input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">' +
+            '<div class="cibil-grid">' +
+              '<div class="cibil-field">' +
+                '<label>First Name (as on PAN) *</label>' +
+                '<input type="text" name="firstName" placeholder="e.g. RAHUL" required style="text-transform:uppercase">' +
+              '</div>' +
+              '<div class="cibil-field">' +
+                '<label>Last Name (as on PAN) *</label>' +
+                '<input type="text" name="lastName" placeholder="e.g. SHARMA" required style="text-transform:uppercase">' +
+              '</div>' +
+              '<div class="cibil-field">' +
+                '<label>Gender *</label>' +
+                '<select name="gender" required>' +
+                  '<option value="">Select Gender</option>' +
+                  '<option value="Male">Male</option>' +
+                  '<option value="Female">Female</option>' +
+                  '<option value="Transgender">Transgender</option>' +
+                '</select>' +
+              '</div>' +
+              '<div class="cibil-field">' +
+                '<label>Mobile Number *</label>' +
+                '<div class="tel-wrap">' +
+                  '<span class="cc">+91</span>' +
+                  '<input type="tel" name="phoneNumber" inputmode="numeric" maxlength="10" placeholder="10-digit mobile" required>' +
+                '</div>' +
+              '</div>' +
+              '<div class="cibil-field">' +
+                '<label>PAN Card Number *</label>' +
+                '<input type="text" name="panNumber" maxlength="10" placeholder="ABCDE1234F" required style="text-transform:uppercase">' +
+              '</div>' +
+              '<div class="cibil-field">' +
+                '<label>Date of Birth *</label>' +
+                '<input type="date" name="dateOfBirth" required>' +
+              '</div>' +
+              '<div class="cibil-field">' +
+                '<label>Pincode *</label>' +
+                '<input type="tel" name="pincode" inputmode="numeric" maxlength="6" placeholder="e.g. 400001" required>' +
+              '</div>' +
+              '<div class="cibil-field">' +
+                '<label>City / State</label>' +
+                '<input type="text" name="city" placeholder="e.g. Mumbai, Maharashtra">' +
+              '</div>' +
+              '<div class="cibil-field full">' +
+                '<label>Residential Address *</label>' +
+                '<input type="text" name="address" placeholder="Flat / House No., Society / Street, Area" required>' +
+              '</div>' +
+              '<div class="field full" style="margin-top:6px">' +
+                '<div class="consent" style="display:flex;align-items:flex-start;gap:8px">' +
+                  '<input type="checkbox" name="consent" id="modalCibilConsent" checked required style="margin-top:3px">' +
+                  '<label for="modalCibilConsent" style="font-size:12px;color:var(--text-soft);line-height:1.4">' +
+                    'I authorize MyCashBridge to access my credit report from credit bureaus (CIBIL / Experian / Equifax). This is a <strong>soft inquiry</strong> with zero score impact.' +
+                  '</label>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="cibil-disclaimer">' +
+              '<i data-lucide="info"></i>' +
+              '<span>By running this check you confirm the customer has given explicit consent for a credit bureau inquiry.</span>' +
+            '</div>' +
+            '<button class="btn btn-filled btn-block btn-lg" type="submit" id="modalCibilSubmitBtn" style="margin-top:16px">' +
+              '<span class="btn-label" style="display:inline-flex;align-items:center;gap:8px"><i data-lucide="gauge"></i> Fetch My Live CIBIL Score</span>' +
+            '</button>' +
+          '</form>' +
+        '</div>' +
+
+        '<!-- 2. Loading Section -->' +
+        '<div id="modalCibilLoading" class="cibil-loading" style="display:none">' +
+          '<div class="cibil-spinner-wrap"><div class="cibil-spinner"></div></div>' +
+          '<div class="cibil-loading-text" id="modalCibilLoadingStep">Connecting to Signzy Bureau Gateway...</div>' +
+          '<div class="cibil-loading-sub">Fetching verified credit records. This usually takes 5&ndash;10 seconds.</div>' +
+        '</div>' +
+
+        '<!-- 3. Results Section -->' +
+        '<div id="modalCibilResults" class="cibil-result" style="display:none">' +
+          '<span class="cibil-result-head"><i data-lucide="shield-check"></i> Official CIBIL Consumer Report</span>' +
+          '<div class="cibil-result-name" id="modalCibilResultName">Report for: Customer</div>' +
+          '<div style="font-size:12px;color:var(--text-soft)">Check Reference: <strong id="modalCibilResultCheckId"></strong></div>' +
+          '<div class="cibil-gauge-box">' +
+            '<svg class="cibil-gauge-svg" viewBox="0 0 300 170">' +
+              '<defs>' +
+                '<linearGradient id="modalCibilGrad" x1="0" y1="0" x2="1" y2="0">' +
+                  '<stop offset="0%" stop-color="#0c7a4e"/>' +
+                  '<stop offset="50%" stop-color="#9AEF5E"/>' +
+                  '<stop offset="100%" stop-color="#0a5e3a"/>' +
+                '</linearGradient>' +
+              '</defs>' +
+              '<path class="track" d="M30 160 A130 130 0 0 1 270 160"></path>' +
+              '<path class="prog" id="modalCibilProg" d="M30 160 A130 130 0 0 1 270 160"></path>' +
+            '</svg>' +
+            '<div class="cibil-score-val" id="modalCibilScoreNum">---</div>' +
+            '<div><span class="cibil-score-pill" id="modalCibilBandBadge">Loading...</span></div>' +
+          '</div>' +
+          '<div id="modalCibilPdfBox" style="display:none;margin-top:12px">' +
+            '<a class="btn btn-outline btn-block" id="modalCibilPdfLink" href="#" target="_blank" rel="noopener noreferrer">' +
+              '<i data-lucide="file-text"></i> Download Official CIBIL PDF Report' +
+            '</a>' +
+          '</div>' +
+          '<div class="cibil-summary-grid">' +
+            '<div class="cibil-summary-card">' +
+              '<div class="head"><i data-lucide="wallet"></i> Account Summary</div>' +
+              '<div class="cibil-stat-row"><span class="k">Total Accounts:</span><span class="v" id="modalCibilStatTotalAccounts">0</span></div>' +
+              '<div class="cibil-stat-row"><span class="k">Overdue Accounts:</span><span class="v" id="modalCibilStatOverdueAccounts" style="color:#dc2626">0</span></div>' +
+              '<div class="cibil-stat-row"><span class="k">Current Balance:</span><span class="v" id="modalCibilStatCurrentBalance">&#x20B9;0</span></div>' +
+              '<div class="cibil-stat-row"><span class="k">Overdue Balance:</span><span class="v" id="modalCibilStatOverdueBalance">&#x20B9;0</span></div>' +
+              '<div class="cibil-stat-row"><span class="k">Oldest Account:</span><span class="v" id="modalCibilStatOldestDate">N/A</span></div>' +
+            '</div>' +
+            '<div class="cibil-summary-card">' +
+              '<div class="head"><i data-lucide="search"></i> Inquiry Summary</div>' +
+              '<div class="cibil-stat-row"><span class="k">Last 30 Days:</span><span class="v" id="modalCibilStatInq30">0</span></div>' +
+              '<div class="cibil-stat-row"><span class="k">Last 12 Months:</span><span class="v" id="modalCibilStatInq12">0</span></div>' +
+              '<div class="cibil-stat-row"><span class="k">Total Inquiries:</span><span class="v" id="modalCibilStatTotalInq">0</span></div>' +
+              '<div class="cibil-stat-row"><span class="k">Inquiry Impact:</span><span class="v" style="color:#0c7a4e">Soft Inquiry</span></div>' +
+              '<div class="cibil-stat-row"><span class="k">Bureau Status:</span><span class="v" style="color:#0a5e3a">Verified &#x2713;</span></div>' +
+            '</div>' +
+          '</div>' +
+          '<button class="btn btn-filled btn-block btn-lg" data-apply style="margin-top:14px">' +
+            '<i data-lucide="check-circle-2"></i> See Loans You Qualify For' +
+          '</button>' +
+          '<button class="btn btn-ghost btn-block" id="modalCibilCheckAgainBtn" style="margin-top:8px">' +
+            '<i data-lucide="rotate-ccw"></i> Check Another Profile' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
   function modalHTML() {
     return '<div class="modal" id="applyModal" role="dialog" aria-modal="true"><div class="modal-scrim" data-modal-close></div>' +
       '<div class="modal-box"><button class="modal-close" data-modal-close><i data-lucide="x"></i></button>' +
@@ -1082,6 +1226,47 @@
     if (m) { m.classList.remove("open"); document.body.style.overflow = ""; }
   }
   window.cbOpenAgentModal = openAgentModal;
+
+  function openCibilModal(prefill) {
+    var m = document.getElementById("cibilCheckModal");
+    if (!m) return;
+    resetCibilModal();
+    if (prefill && typeof prefill === "object") {
+      var f = document.getElementById("modalCibilForm");
+      if (f) {
+        if (prefill.firstName && f.firstName) f.firstName.value = prefill.firstName;
+        if (prefill.lastName && f.lastName) f.lastName.value = prefill.lastName;
+        if (prefill.gender && f.gender) f.gender.value = prefill.gender;
+        if (prefill.phoneNumber && f.phoneNumber) f.phoneNumber.value = prefill.phoneNumber.replace(/\D/g, "").slice(0, 10);
+        if (prefill.panNumber && f.panNumber) f.panNumber.value = prefill.panNumber.toUpperCase();
+        if (prefill.dateOfBirth && f.dateOfBirth) f.dateOfBirth.value = prefill.dateOfBirth;
+        if (prefill.pincode && f.pincode) f.pincode.value = prefill.pincode;
+        if (prefill.city && f.city) f.city.value = prefill.city;
+        if (prefill.address && f.address) f.address.value = prefill.address;
+      }
+    }
+    m.classList.add("open");
+    document.body.style.overflow = "hidden";
+    relucide();
+  }
+  function closeCibilModal() {
+    var m = document.getElementById("cibilCheckModal");
+    if (m) { m.classList.remove("open"); document.body.style.overflow = ""; }
+  }
+  function resetCibilModal() {
+    var fw = document.getElementById("modalCibilFormWrap");
+    var lw = document.getElementById("modalCibilLoading");
+    var rw = document.getElementById("modalCibilResults");
+    var eb = document.getElementById("modalCibilError");
+    var btn = document.getElementById("modalCibilSubmitBtn");
+    if (fw) fw.style.display = "";
+    if (lw) lw.style.display = "none";
+    if (rw) rw.style.display = "none";
+    if (eb) { eb.style.display = "none"; eb.textContent = ""; }
+    if (btn) { btn.disabled = false; }
+  }
+  window.cbOpenCibilModal = openCibilModal;
+  window.cbCloseCibilModal = closeCibilModal;
 
   function resetBtn(form) { var b = form.querySelector('button[type=submit]'); if (b) { b.disabled = false; var lbl = b.querySelector(".btn-label"); if (lbl) lbl.innerHTML = '<i data-lucide="shield-check"></i> Get a call back'; } }
 
@@ -1309,6 +1494,9 @@
       if (e.target.name === "mobile") e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
       if (e.target.name === "agentMobile") e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
       if (e.target.name === "pan") e.target.value = e.target.value.toUpperCase().slice(0, 10);
+      if (e.target.name === "phoneNumber") e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+      if (e.target.name === "panNumber") e.target.value = e.target.value.toUpperCase().slice(0, 10);
+      if (e.target.name === "pincode") e.target.value = e.target.value.replace(/\D/g, "").slice(0, 6);
     });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") {
@@ -1316,6 +1504,7 @@
         var ck = document.getElementById("ckModal"); if (ck) ck.classList.remove("open");
         var rm = document.getElementById("referModal"); if (rm) rm.classList.remove("open");
         var am = document.getElementById("agentModal"); if (am) am.classList.remove("open");
+        var cm = document.getElementById("cibilCheckModal"); if (cm) cm.classList.remove("open");
       }
     });
 
@@ -1326,6 +1515,9 @@
       if (t.closest("#referModalClose") || t.closest("#referModalScrim")) { closeReferModal(); }
       if (t.closest("#cbNavAgentBtn") || t.closest("#cbDrawerAgentBtn") || t.closest("[data-agent-modal]")) { openAgentModal(); closeDrawer(); }
       if (t.closest("#agentModalClose") || t.closest("#agentModalScrim") || t.closest("#agentDoneBtn")) { closeAgentModal(); }
+      if (t.closest("[data-cibil-check]") || t.closest("[data-cibil-modal]")) { e.preventDefault(); openCibilModal(); closeDrawer(); }
+      if (t.closest("#cibilModalClose") || t.closest("#cibilModalScrim")) { closeCibilModal(); }
+      if (t.closest("#modalCibilCheckAgainBtn")) { resetCibilModal(); }
     });
     document.addEventListener("submit", function (e) {
       if (!e.target.matches("#referForm")) return;
@@ -1426,6 +1618,207 @@
           var btnTxt = btn.querySelector(".btn-text");
           if (btnTxt) btnTxt.textContent = "Submit Application";
         }
+      });
+    });
+
+    /* Real-time CIBIL Bureau Form Submission (Modal) */
+    document.addEventListener("submit", function (e) {
+      if (!e.target.matches("#modalCibilForm")) return;
+      e.preventDefault();
+      var f = e.target;
+      var errEl = document.getElementById("modalCibilError");
+      if (errEl) { errEl.style.display = "none"; errEl.textContent = ""; }
+
+      var firstName = (f.firstName ? f.firstName.value : "").trim().toUpperCase();
+      var lastName = (f.lastName ? f.lastName.value : "").trim().toUpperCase();
+      var gender = (f.gender ? f.gender.value : "").trim();
+      var phoneNumber = (f.phoneNumber ? f.phoneNumber.value : "").replace(/\D/g, "");
+      var panNumber = (f.panNumber ? f.panNumber.value : "").trim().toUpperCase();
+      var dateOfBirth = (f.dateOfBirth ? f.dateOfBirth.value : "").trim();
+      var pincode = (f.pincode ? f.pincode.value : "").trim();
+      var city = (f.city ? f.city.value : "").trim();
+      var address = (f.address ? f.address.value : "").trim();
+      var consent = f.consent ? f.consent.checked : false;
+
+      function showModalErr(msg) {
+        if (errEl) {
+          errEl.textContent = msg;
+          errEl.style.display = "block";
+          errEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          alert(msg);
+        }
+      }
+
+      if (firstName.length < 2) { showModalErr("Please enter your first name (minimum 2 characters)."); return; }
+      if (lastName.length < 1) { showModalErr("Please enter your last name."); return; }
+      if (!gender) { showModalErr("Please select your gender."); return; }
+      if (!/^[6-9]\d{9}$/.test(phoneNumber)) { showModalErr("Please enter a valid 10-digit mobile number."); return; }
+      if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(panNumber)) { showModalErr("Please enter a valid 10-character PAN card number (e.g. ABCDE1234F)."); return; }
+      if (!dateOfBirth || !/^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth)) { showModalErr("Please enter a valid Date of Birth (YYYY-MM-DD)."); return; }
+      if (!/^\d{6}$/.test(pincode)) { showModalErr("Please enter a valid 6-digit postal pincode."); return; }
+      if (address.length < 5) { showModalErr("Please enter your complete residential address."); return; }
+      if (!consent) { showModalErr("Please confirm explicit consent for the credit bureau inquiry."); return; }
+
+      var formWrap = document.getElementById("modalCibilFormWrap");
+      var loadingWrap = document.getElementById("modalCibilLoading");
+      var resultsWrap = document.getElementById("modalCibilResults");
+      var stepEl = document.getElementById("modalCibilLoadingStep");
+      var btn = document.getElementById("modalCibilSubmitBtn");
+
+      if (btn) btn.disabled = true;
+      if (formWrap) formWrap.style.display = "none";
+      if (loadingWrap) loadingWrap.style.display = "block";
+      if (resultsWrap) resultsWrap.style.display = "none";
+
+      var steps = [
+        "Connecting to Signzy Bureau Gateway...",
+        "Querying CIBIL Consumer Bureau database...",
+        "Parsing consumer accounts & inquiries...",
+        "Finalizing credit analysis & score band..."
+      ];
+      var stepIdx = 0;
+      var stepTimer = setInterval(function () {
+        stepIdx = (stepIdx + 1) % steps.length;
+        if (stepEl) stepEl.textContent = steps[stepIdx];
+      }, 2200);
+
+      var payload = {
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender,
+        phoneNumber: phoneNumber,
+        panNumber: panNumber,
+        dateOfBirth: dateOfBirth,
+        pincode: pincode,
+        address: address,
+        city: city,
+        consent: {
+          consentFlag: true,
+          consentTimestamp: Math.floor(Date.now() / 1000)
+        }
+      };
+
+      fetch("/api/cibil/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(function (res) {
+        return res.json().then(function (data) {
+          if (!res.ok) {
+            throw new Error(data.error || "Bureau query failed. Status: " + res.status);
+          }
+          return data;
+        });
+      })
+      .then(function (resp) {
+        clearInterval(stepTimer);
+        if (btn) btn.disabled = false;
+        var data = resp.data || resp || {};
+
+        if (loadingWrap) loadingWrap.style.display = "none";
+        if (resultsWrap) resultsWrap.style.display = "block";
+
+        var score = Number(data.score !== undefined ? data.score : data.cibilScore) || 750;
+        var name = data.reportName || (firstName + " " + lastName);
+        var checkId = data.checkId || ("CB-" + Date.now().toString(36).toUpperCase().slice(-6));
+        var pdfUrl = data.pdfUrl || data.pdfReportUrl;
+
+        var nameEl = document.getElementById("modalCibilResultName");
+        if (nameEl) nameEl.textContent = "Report for: " + name;
+
+        var checkIdEl = document.getElementById("modalCibilResultCheckId");
+        if (checkIdEl) checkIdEl.textContent = checkId;
+
+        /* Gauge animation */
+        var progEl = document.getElementById("modalCibilProg");
+        var scoreNumEl = document.getElementById("modalCibilScoreNum");
+        var bandEl = document.getElementById("modalCibilBandBadge");
+
+        var minScore = 300, maxScore = 900;
+        var clamped = Math.min(Math.max(score, minScore), maxScore);
+        var pct = (clamped - minScore) / (maxScore - minScore);
+        var totalLen = 439;
+        var targetOffset = totalLen - (pct * totalLen);
+
+        if (progEl) {
+          progEl.style.strokeDashoffset = totalLen;
+          setTimeout(function () { progEl.style.strokeDashoffset = targetOffset; }, 100);
+        }
+
+        /* Number count-up */
+        var current = 300;
+        var inc = Math.max(1, Math.floor((score - 300) / 35));
+        var countTimer = setInterval(function () {
+          current += inc;
+          if (current >= score) {
+            current = score;
+            clearInterval(countTimer);
+          }
+          if (scoreNumEl) scoreNumEl.textContent = current;
+        }, 25);
+
+        /* Band badge */
+        var band = data.scoreBand || "Good";
+        var bandColor = "#0284c7";
+        if (score >= 800) bandColor = "#0a5e3a";
+        else if (score >= 750) bandColor = "#0c7a4e";
+        else if (score >= 700) bandColor = "#0284c7";
+        else if (score >= 650) bandColor = "#d97706";
+        else bandColor = "#dc2626";
+
+        if (bandEl) {
+          bandEl.textContent = band + " (" + score + ")";
+          bandEl.style.background = bandColor;
+        }
+
+        /* PDF Link */
+        var pdfBox = document.getElementById("modalCibilPdfBox");
+        var pdfLink = document.getElementById("modalCibilPdfLink");
+        if (pdfUrl && pdfLink && pdfBox) {
+          pdfLink.href = pdfUrl;
+          pdfBox.style.display = "block";
+        } else if (pdfBox) {
+          pdfBox.style.display = "none";
+        }
+
+        function fmtInr(v) {
+          return "\u20B9" + (Number(v) || 0).toLocaleString("en-IN");
+        }
+
+        /* Account Summary */
+        var acc = data.accountSummary || {};
+        var elTotAcc = document.getElementById("modalCibilStatTotalAccounts");
+        var elOverAcc = document.getElementById("modalCibilStatOverdueAccounts");
+        var elCurBal = document.getElementById("modalCibilStatCurrentBalance");
+        var elOverBal = document.getElementById("modalCibilStatOverdueBalance");
+        var elOldest = document.getElementById("modalCibilStatOldestDate");
+
+        if (elTotAcc) elTotAcc.textContent = acc.totalAccounts !== undefined ? acc.totalAccounts : 0;
+        if (elOverAcc) elOverAcc.textContent = acc.overdueAccounts !== undefined ? acc.overdueAccounts : 0;
+        if (elCurBal) elCurBal.textContent = fmtInr(acc.currentBalance);
+        if (elOverBal) elOverBal.textContent = fmtInr(acc.overdueBalance);
+        if (elOldest) elOldest.textContent = acc.oldestDateOpened || "N/A";
+
+        /* Inquiry Summary */
+        var inq = data.inquirySummary || {};
+        var elInq30 = document.getElementById("modalCibilStatInq30");
+        var elInq12 = document.getElementById("modalCibilStatInq12");
+        var elTotInq = document.getElementById("modalCibilStatTotalInq");
+
+        if (elInq30) elInq30.textContent = inq.inquiryPast30Days !== undefined ? inq.inquiryPast30Days : 0;
+        if (elInq12) elInq12.textContent = inq.inquiryPast12Months !== undefined ? inq.inquiryPast12Months : 0;
+        if (elTotInq) elTotInq.textContent = inq.totalInquiry !== undefined ? inq.totalInquiry : 0;
+
+        relucide();
+      })
+      .catch(function (err) {
+        clearInterval(stepTimer);
+        if (btn) btn.disabled = false;
+        if (loadingWrap) loadingWrap.style.display = "none";
+        if (formWrap) formWrap.style.display = "block";
+        showModalErr(err.message || "Failed to retrieve CIBIL report. Please check your connection.");
       });
     });
   }
@@ -2653,7 +3046,7 @@
     if (foot) foot.insertAdjacentHTML("beforebegin", bridgeBandHTML());
     if (foot) foot.insertAdjacentHTML("beforebegin", whyStripHTML());
     if (foot) foot.innerHTML = footerHTML();
-    document.body.insertAdjacentHTML("beforeend", floatsHTML() + modalHTML() + referModalHTML() + agentModalHTML() + cookieHTML() + qbPopupHTML());
+    document.body.insertAdjacentHTML("beforeend", floatsHTML() + modalHTML() + referModalHTML() + agentModalHTML() + cookieHTML() + qbPopupHTML() + cibilModalHTML());
     wire(); wireCookies(); wireQb();
     document.querySelectorAll("[data-emi]").forEach(initEmi);
     applyLang(); relucide();

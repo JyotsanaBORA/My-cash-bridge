@@ -48,6 +48,8 @@ const cookieConsentRoute  = require("./src/routes/cookie-consent.route");
 const adminRoute          = require("./src/routes/admin.route");
 // Loan Agent Partner Intake
 const agentsRoute         = require("./src/routes/agents.route");
+// Signzy CIBIL Bureau Consumer Report Check
+const cibilRoute          = require("./src/routes/cibil.route");
 
 // ── Retention job (Phase 6) ─────────────────────────────────────────────────
 const { startRetentionJob } = require("./src/jobs/retention.job");
@@ -144,6 +146,7 @@ app.use(grievanceRoute);
 app.use(cookieConsentRoute);
 app.use(adminRoute);
 app.use(agentsRoute);
+app.use(cibilRoute);
 
 // ── Dedicated Google Ads Campaign Routes ────────────────────
 // Maps short/friendly ad paths to the corresponding loan service pages

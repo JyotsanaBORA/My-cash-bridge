@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Google Tag Manager -->
@@ -45,25 +45,12 @@ src="https://www.facebook.com/tr?id=2554292998349367&ev=PageView&noscript=1"
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Free CIBIL / Credit Score Check &ndash; MyCashBridge.com</title>
-<meta name="description" content="Check your CIBIL credit score for free with MyCashBridge.com. See where you stand and get tips to improve &ndash; no impact on your score." />
+<meta name="description" content="Check your official CIBIL credit score for free powered by Signzy Bureau API. Soft inquiry with zero score impact. Get comprehensive account and inquiry summary." />
 <link rel="icon" href="../assets/logo-cashbridge-mark.svg" />
-<link rel="stylesheet" href="../assets/site.css" />
+<link rel="stylesheet" href="../assets/site.css?v=9" />
 <script src="../assets/lucide.min.js"></script>
 <style>
-  .cs-grid { display:grid; grid-template-columns: 1fr 1fr; gap:40px; align-items:center; }
-  .gauge-wrap { text-align:center; padding:8px 0; }
-  .gauge-svg { width:280px; max-width:100%; }
-  .gauge-svg .track { fill:none; stroke:var(--ceramic); stroke-width:16; stroke-linecap:round; }
-  .gauge-svg .prog { fill:none; stroke:url(#csgrad); stroke-width:16; stroke-linecap:round; stroke-dasharray:439; stroke-dashoffset:439; transition:stroke-dashoffset 1.2s var(--ease-expander); }
-  .score-num { font-size:54px; font-weight:800; color:var(--green-primary); letter-spacing:-.02em; line-height:1; }
-  .score-band { font-size:15px; font-weight:700; color:var(--green-accent); margin-top:4px; }
-  .csfactor { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--hairline); font-size:14px; }
-  .csfactor:last-child { border-bottom:none; }
-  .csfactor .ic { width:34px; height:34px; flex:0 0 34px; border-radius:50%; background:var(--aqua); display:flex; align-items:center; justify-content:center; }
-  .csfactor .ic i { width:18px; height:18px; color:var(--green-primary); }
-  .csfactor .tag { margin-left:auto; font-size:12px; font-weight:700; padding:3px 10px; border-radius:50px; }
-  .tag-good { background:var(--lime-soft); color:var(--green-deep); }
-  .tag-ok { background:var(--gold-lightest); color:var(--gold); }
+  .cs-grid { display:grid; grid-template-columns: 1.05fr .95fr; gap:44px; align-items:start; }
   @media (max-width:980px){ .cs-grid{ grid-template-columns:1fr; } }
 </style>
 </head>
@@ -76,91 +63,428 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <section class="phead"><div class="wrap"><div class="phead-greet"><img src="../assets/setu/setu-hero.svg" alt="" aria-hidden="true"><span class="pg-label"><b>Namaste! I'm Setu</b>Your loan saathi &mdash; here to help</span></div><div class="crumb"><a href="../index.html">Home</a> <i data-lucide="chevron-right" style="width:14px;height:14px"></i> <span style="color:var(--text-strong)">Free CIBIL Score</span></div></div></section>
 
-<section class="hero" style="padding-top:28px">
+<section class="hero" style="padding-top:24px;padding-bottom:56px">
   <div class="wrap cs-grid">
     <div>
-      <span class="pill pill-lime"><i data-lucide="gauge"></i> 100% free &ndash; no impact on your score</span>
-      <h1 class="h-hero" style="margin-top:16px">Know your credit score, for free.</h1>
-      <p class="sub">Your CIBIL score is the single biggest factor in your loan approval and interest rate. Check it free in 10 seconds and get clear tips to improve it.</p>
-      <div class="checklist" style="margin-top:22px;max-width:460px">
-        <div class="ck"><i data-lucide="check-circle-2"></i><span>Soft check &ndash; no score impact</span></div>
-        <div class="ck"><i data-lucide="check-circle-2"></i><span>Personalised improvement tips</span></div>
-        <div class="ck"><i data-lucide="check-circle-2"></i><span>See loans you may qualify for</span></div>
-        <div class="ck"><i data-lucide="check-circle-2"></i><span>Bank-grade data security</span></div>
+      <span class="pill pill-lime"><i data-lucide="gauge"></i> 100% Free &bull; Soft Inquiry</span>
+      <h1 class="h-hero" style="margin-top:16px">Know your real credit score, instantly.</h1>
+      <p class="sub">Your CIBIL score is the single biggest factor in your loan approval and interest rates. Check it live in seconds via our direct bureau integration &ndash; with zero score impact.</p>
+      
+      <div class="checklist" style="margin-top:24px;max-width:480px">
+        <div class="ck"><i data-lucide="shield-check"></i><span>Official CIBIL Consumer Bureau Data</span></div>
+        <div class="ck"><i data-lucide="check-circle-2"></i><span>Soft inquiry &ndash; does not affect your score</span></div>
+        <div class="ck"><i data-lucide="file-text"></i><span>Download official PDF report</span></div>
+        <div class="ck"><i data-lucide="layers"></i><span>Complete account &amp; inquiry breakdown</span></div>
+        <div class="ck"><i data-lucide="lock"></i><span>Bank-grade 256-bit encryption</span></div>
+      </div>
+
+      <div style="margin-top:32px;background:var(--white);border-radius:var(--radius-card);padding:20px 24px;border:1px solid var(--hairline);box-shadow:var(--shadow-card)">
+        <div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--green-primary);margin-bottom:8px">CIBIL Score Ranges:</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;font-size:13px">
+          <div><strong style="color:#0a5e3a">&#x25CF; 800+</strong> &mdash; Excellent</div>
+          <div><strong style="color:#0c7a4e">&#x25CF; 750 &ndash; 799</strong> &mdash; Very Good</div>
+          <div><strong style="color:#0284c7">&#x25CF; 700 &ndash; 749</strong> &mdash; Good</div>
+          <div><strong style="color:#d97706">&#x25CF; 650 &ndash; 699</strong> &mdash; Fair</div>
+          <div style="grid-column:1/-1"><strong style="color:#dc2626">&#x25CF; Below 650</strong> &mdash; Poor / Action Needed</div>
+        </div>
       </div>
     </div>
-    <div class="apply-card">
-      <div class="apply-form-wrap">
-        <span class="pill pill-approved" style="margin-bottom:12px"><i data-lucide="lock"></i> Your data is encrypted</span>
-        <h3>Check your score free</h3>
-        <p class="sub">We use your PAN to fetch your score securely. We never store it without consent.</p>
-        <form class="lead-form" data-loan="Free CIBIL check" novalidate>
-          <div class="form-grid">
-            <div class="field full"><label>Full name (as on PAN)</label><input name="name" type="text" placeholder="e.g. Rohan Sharma"><span class="err">Please enter your name</span></div>
-            <div class="field"><label>Mobile number</label><div class="tel-wrap"><span class="cc">+91</span><input name="mobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile"></div><span class="err">Enter a valid 10-digit mobile</span></div>
-            <div class="field"><label>PAN</label><input name="pan" type="text" maxlength="10" placeholder="ABCDE1234F" style="text-transform:uppercase"><span class="err">Required</span></div>
-            <div class="field"><label>Age</label><input name="age" type="number" min="21" max="80" inputmode="numeric" placeholder="e.g. 28"><span class="err">Must be 21 or above</span><span style="display:block;margin-top:5px;font-size:11px;color:#0c5460;background:#d1ecf1;border:1px solid #bee5eb;border-radius:5px;padding:4px 8px">&#x2139;&#xFE0F; Applicants must be at least <strong>21 years old</strong> to be eligible for a loan.</span></div>
-            <div class="field full"><label>Outstanding debt <span class="opt">(if any)</span></label><div class="seg" data-seg="outstanding_debt"><div class="seg-opt" data-val="None">None</div><div class="seg-opt" data-val="Loan">Loan</div><div class="seg-opt" data-val="Credit Card">Credit Card</div><div class="seg-opt" data-val="Both">Both</div><input type="hidden" name="outstanding_debt"></div><div class="outstanding-amt" style="display:none;margin-top:8px"><label style="font-size:12px;color:var(--text-soft);margin-bottom:4px;display:block">Outstanding amount (&#x20B9;)</label><input name="outstanding_amount" type="number" min="0" placeholder="e.g. 50000" inputmode="numeric"></div></div>
-            <div class="field"><label>CIBIL score <span class="opt">(approx.)</span></label><select name="cibil_score"><option value="">Select range</option><option>Don&apos;t know</option><option>Below 600 (Poor)</option><option>600&#8211;649 (Fair)</option><option>650&#8211;699 (Average)</option><option>700&#8211;749 (Good)</option><option>750&#8211;799 (Very Good)</option><option>800+ (Excellent)</option></select></div>
-            <div class="field full"><div class="consent"><input type="checkbox" name="consent" id="cs-consent"><label for="cs-consent">I authorise MyCashBridge.com to fetch my credit score and contact me about suitable offers. This overrides my DND/NDNC registration.</label></div><span class="err">Please accept to continue</span></div>
+
+    <!-- CIBIL Card Container -->
+    <div class="cibil-card" id="csCard">
+      <!-- 1. Form Section -->
+      <div id="csFormSection">
+        <span class="pill pill-approved"><i data-lucide="shield-check"></i> Signzy Bureau Powered</span>
+        <h3>Check Your CIBIL Score</h3>
+        <p class="sub">Enter your exact details as per your PAN card. We verify your profile directly with the bureau.</p>
+
+        <div class="cibil-err-banner" id="csErrorBanner" style="display:none"></div>
+
+        <form id="cibilForm" novalidate>
+          <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+          
+          <div class="cibil-grid">
+            <div class="cibil-field">
+              <label>First Name (as on PAN) *</label>
+              <input type="text" name="firstName" placeholder="e.g. RAHUL" required style="text-transform:uppercase">
+            </div>
+
+            <div class="cibil-field">
+              <label>Last Name (as on PAN) *</label>
+              <input type="text" name="lastName" placeholder="e.g. SHARMA" required style="text-transform:uppercase">
+            </div>
+
+            <div class="cibil-field">
+              <label>Gender *</label>
+              <select name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Transgender">Transgender</option>
+              </select>
+            </div>
+
+            <div class="cibil-field">
+              <label>Mobile Number *</label>
+              <div class="tel-wrap">
+                <span class="cc">+91</span>
+                <input type="tel" name="phoneNumber" inputmode="numeric" maxlength="10" placeholder="10-digit mobile" required>
+              </div>
+            </div>
+
+            <div class="cibil-field">
+              <label>PAN Card Number *</label>
+              <input type="text" name="panNumber" maxlength="10" placeholder="ABCDE1234F" required style="text-transform:uppercase">
+            </div>
+
+            <div class="cibil-field">
+              <label>Date of Birth *</label>
+              <input type="date" name="dateOfBirth" required>
+            </div>
+
+            <div class="cibil-field">
+              <label>Pincode *</label>
+              <input type="tel" name="pincode" inputmode="numeric" maxlength="6" placeholder="e.g. 400001" required>
+            </div>
+
+            <div class="cibil-field">
+              <label>City / State</label>
+              <input type="text" name="city" placeholder="e.g. Mumbai, Maharashtra">
+            </div>
+
+            <div class="cibil-field full">
+              <label>Residential Address *</label>
+              <input type="text" name="address" placeholder="Flat / House No., Society / Street, Area" required>
+            </div>
+
+            <div class="field full" style="margin-top:6px">
+              <div class="consent" style="display:flex;align-items:flex-start;gap:8px">
+                <input type="checkbox" name="consent" id="csConsent" checked required style="margin-top:3px">
+                <label for="csConsent" style="font-size:12px;color:var(--text-soft);line-height:1.4">
+                  I authorize MyCashBridge to access my credit report from credit bureaus (CIBIL / Experian / Equifax) to fetch my credit score. This is a <strong>soft inquiry</strong> with zero score impact.
+                </label>
+              </div>
+            </div>
           </div>
-          <button class="btn btn-filled btn-block btn-lg" type="submit" style="margin-top:16px"><span class="btn-label"><i data-lucide="gauge"></i> Get my free score</span></button>
+
+          <div class="cibil-disclaimer">
+            <i data-lucide="info"></i>
+            <span>By running this check you confirm you have given explicit consent for a credit bureau inquiry.</span>
+          </div>
+
+          <button class="btn btn-filled btn-block btn-lg" type="submit" id="csSubmitBtn" style="margin-top:16px">
+            <span class="btn-label" style="display:inline-flex;align-items:center;gap:8px"><i data-lucide="gauge"></i> Fetch My Live CIBIL Score</span>
+          </button>
         </form>
       </div>
-      <div class="thanks">
-        <div class="confetti"></div>
-        <div class="gauge-wrap">
-          <svg class="gauge-svg" viewBox="0 0 300 170">
-            <defs><linearGradient id="csgrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0c7a4e"/><stop offset="1" stop-color="#9AEF5E"/></linearGradient></defs>
+
+      <!-- 2. Loading State -->
+      <div id="csLoadingSection" class="cibil-loading" style="display:none">
+        <div class="cibil-spinner-wrap">
+          <div class="cibil-spinner"></div>
+        </div>
+        <div class="cibil-loading-text" id="csLoadingStep">Connecting to Signzy Bureau Gateway...</div>
+        <div class="cibil-loading-sub">Fetching verified credit records. This usually takes 5&ndash;10 seconds.</div>
+      </div>
+
+      <!-- 3. Result State -->
+      <div id="csResultSection" class="cibil-result" style="display:none">
+        <span class="cibil-result-head"><i data-lucide="shield-check"></i> Official CIBIL Consumer Report</span>
+        <div class="cibil-result-name" id="csResultReportName">Report for: RAHUL SHARMA</div>
+        <div style="font-size:12px;color:var(--text-soft)">Check Reference: <strong id="csResultCheckId"></strong></div>
+
+        <!-- Gauge SVG -->
+        <div class="cibil-gauge-box">
+          <svg class="cibil-gauge-svg" viewBox="0 0 300 170">
+            <defs>
+              <linearGradient id="cibilGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#0c7a4e"/>
+                <stop offset="50%" stop-color="#9AEF5E"/>
+                <stop offset="100%" stop-color="#0a5e3a"/>
+              </linearGradient>
+            </defs>
             <path class="track" d="M30 160 A130 130 0 0 1 270 160"></path>
-            <path class="prog" id="csProg" d="M30 160 A130 130 0 0 1 270 160"></path>
+            <path class="prog" id="csResultProg" d="M30 160 A130 130 0 0 1 270 160"></path>
           </svg>
-          <div class="score-num" id="csNum" style="margin-top:-30px">300</div>
-          <div class="score-band" id="csBand">Fetching&ndash;</div>
+          <div class="cibil-score-val" id="csResultScoreNum">---</div>
+          <div><span class="cibil-score-pill" id="csResultBandBadge">Loading...</span></div>
         </div>
-        <div style="width:100%;margin-top:8px">
-          <div class="csfactor"><div class="ic"><i data-lucide="history"></i></div><div><b>Payment history</b><br><span class="muted" style="font-size:12px">On-time payments</span></div><span class="tag tag-good">Strong</span></div>
-          <div class="csfactor"><div class="ic"><i data-lucide="pie-chart"></i></div><div><b>Credit utilisation</b><br><span class="muted" style="font-size:12px">Keep below 30%</span></div><span class="tag tag-ok">Watch</span></div>
-          <div class="csfactor"><div class="ic"><i data-lucide="layers"></i></div><div><b>Credit mix &amp; age</b><br><span class="muted" style="font-size:12px">Healthy variety</span></div><span class="tag tag-good">Strong</span></div>
+
+        <!-- PDF Report Link -->
+        <div id="csPdfBox" style="display:none;margin-top:12px">
+          <a class="btn btn-outline btn-block" id="csPdfLink" href="#" target="_blank" rel="noopener noreferrer">
+            <i data-lucide="file-text"></i> Download Official CIBIL PDF Report
+          </a>
         </div>
-        <button class="btn btn-filled btn-block btn-lg" data-apply style="margin-top:18px"><i data-lucide="phone-call"></i> See loans I qualify for</button>
-        <div class="ref"></div>
+
+        <!-- Summary Cards Grid -->
+        <div class="cibil-summary-grid">
+          <!-- Account Summary -->
+          <div class="cibil-summary-card">
+            <div class="head"><i data-lucide="wallet"></i> Account Summary</div>
+            <div class="cibil-stat-row"><span class="k">Total Accounts:</span><span class="v" id="csStatTotalAccounts">0</span></div>
+            <div class="cibil-stat-row"><span class="k">Overdue Accounts:</span><span class="v" id="csStatOverdueAccounts" style="color:#dc2626">0</span></div>
+            <div class="cibil-stat-row"><span class="k">Current Balance:</span><span class="v" id="csStatCurrentBalance">&#x20B9;0</span></div>
+            <div class="cibil-stat-row"><span class="k">Overdue Balance:</span><span class="v" id="csStatOverdueBalance">&#x20B9;0</span></div>
+            <div class="cibil-stat-row"><span class="k">Oldest Account:</span><span class="v" id="csStatOldestDate">N/A</span></div>
+          </div>
+
+          <!-- Inquiry Summary -->
+          <div class="cibil-summary-card">
+            <div class="head"><i data-lucide="search"></i> Inquiry Summary</div>
+            <div class="cibil-stat-row"><span class="k">Last 30 Days:</span><span class="v" id="csStatInq30">0</span></div>
+            <div class="cibil-stat-row"><span class="k">Last 12 Months:</span><span class="v" id="csStatInq12">0</span></div>
+            <div class="cibil-stat-row"><span class="k">Total Inquiries:</span><span class="v" id="csStatTotalInq">0</span></div>
+            <div class="cibil-stat-row"><span class="k">Inquiry Impact:</span><span class="v" style="color:#0c7a4e">Soft Inquiry</span></div>
+            <div class="cibil-stat-row"><span class="k">Bureau Status:</span><span class="v" style="color:#0a5e3a">Verified &#x2713;</span></div>
+          </div>
+        </div>
+
+        <!-- Action CTAs -->
+        <button class="btn btn-filled btn-block btn-lg" data-apply style="margin-top:14px">
+          <i data-lucide="check-circle-2"></i> See Loans You Qualify For
+        </button>
+
+        <button class="btn btn-ghost btn-block" id="csCheckAgainBtn" style="margin-top:8px">
+          <i data-lucide="rotate-ccw"></i> Check Another Profile
+        </button>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Additional Helpful Section -->
 <section class="band">
   <div class="wrap">
     <div class="eyebrow">Improve your score</div>
-    <h2 class="h-sec green" style="margin:10px 0 22px">Simple habits that lift your CIBIL</h2>
+    <h2 class="h-sec green" style="margin:10px 0 22px">Habits that lift your CIBIL score</h2>
     <div class="why-grid">
-      <div class="why"><div class="why-ic"><i data-lucide="calendar-check"></i></div><b>Pay on time</b><p>Never miss an EMI or card due date. Payment history is the biggest factor in your score.</p></div>
-      <div class="why"><div class="why-ic"><i data-lucide="pie-chart"></i></div><b>Use under 30%</b><p>Keep your credit-card spends below 30% of your limit to look financially healthy.</p></div>
-      <div class="why"><div class="why-ic"><i data-lucide="search-x"></i></div><b>Limit hard enquiries</b><p>Apply Once. Compare 128+ Lenders. Upload Documents Once. Get the Best Offer Delivered to You.</p></div>
-      <div class="why"><div class="why-ic"><i data-lucide="shield-check"></i></div><b>Check for errors</b><p>Review your report yearly and dispute any mistakes that may be dragging your score down.</p></div>
+      <div class="why"><div class="why-ic"><i data-lucide="calendar-check"></i></div><b>Pay on time</b><p>Never miss an EMI or credit card due date. Payment history accounts for 35% of your score.</p></div>
+      <div class="why"><div class="why-ic"><i data-lucide="pie-chart"></i></div><b>Use under 30%</b><p>Keep your total credit-card utilisation below 30% of your sanction limit.</p></div>
+      <div class="why"><div class="why-ic"><i data-lucide="search-x"></i></div><b>Avoid multiple hard enquiries</b><p>Comparing on MyCashBridge is a soft inquiry. Avoid applying to 10 banks simultaneously.</p></div>
+      <div class="why"><div class="why-ic"><i data-lucide="shield-check"></i></div><b>Check for errors</b><p>Regularly check your report for settled accounts marked wrong and dispute them early.</p></div>
     </div>
   </div>
 </section>
 
 <div data-mount="footer"></div>
-<script src="../assets/site.js"></script>
+
+<script src="../assets/site.js?v=9"></script>
 <script>
-  (function(){
-    var thanks = document.querySelector('.apply-card .thanks');
-    if(!thanks) return;
-    var TARGET = 762; // sample demo score
-    function reveal(){
-      var prog=document.getElementById('csProg'), num=document.getElementById('csNum'), band=document.getElementById('csBand');
-      var frac=(TARGET-300)/(900-300);
-      setTimeout(function(){ prog.style.strokeDashoffset = String(439-439*frac); }, 150);
-      var start=300, t0=null;
-      function step(ts){ if(!t0)t0=ts; var p=Math.min(1,(ts-t0)/1200); var val=Math.round(start+(TARGET-start)*p); num.textContent=val; if(p<1) requestAnimationFrame(step); }
-      requestAnimationFrame(step);
-      band.textContent = TARGET>=750?'Excellent &ndash; 300&ndash;900 range':(TARGET>=700?'Good':'Fair');
+(function() {
+  var form = document.getElementById("cibilForm");
+  var formSection = document.getElementById("csFormSection");
+  var loadingSection = document.getElementById("csLoadingSection");
+  var resultSection = document.getElementById("csResultSection");
+  var errBanner = document.getElementById("csErrorBanner");
+  var loadingStep = document.getElementById("csLoadingStep");
+  var checkAgainBtn = document.getElementById("csCheckAgainBtn");
+
+  if (!form) return;
+
+  function showError(msg) {
+    errBanner.textContent = msg;
+    errBanner.style.display = "block";
+    errBanner.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function hideError() {
+    errBanner.textContent = "";
+    errBanner.style.display = "none";
+  }
+
+  function formatCurrency(val) {
+    var num = Number(val) || 0;
+    return "\u20B9" + num.toLocaleString("en-IN");
+  }
+
+  function animateScore(targetScore, band, bandColor) {
+    var prog = document.getElementById("csResultProg");
+    var scoreNum = document.getElementById("csResultScoreNum");
+    var bandBadge = document.getElementById("csResultBandBadge");
+
+    bandBadge.textContent = band;
+    bandBadge.style.background = bandColor;
+
+    if (!targetScore || targetScore <= 0) {
+      scoreNum.textContent = "NTC";
+      prog.style.strokeDashoffset = "439";
+      return;
     }
-    new MutationObserver(function(){ if(thanks.classList.contains('show')) reveal(); }).observe(thanks,{attributes:true,attributeFilter:['class']});
-  })();
+
+    var minScore = 300;
+    var maxScore = 900;
+    var clamped = Math.max(minScore, Math.min(maxScore, targetScore));
+    var fraction = (clamped - minScore) / (maxScore - minScore);
+    var targetOffset = String(439 - (439 * fraction));
+
+    setTimeout(function() {
+      prog.style.strokeDashoffset = targetOffset;
+    }, 150);
+
+    var start = 300;
+    var startTime = null;
+    var duration = 1200;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min(1, (timestamp - startTime) / duration);
+      var currentVal = Math.round(start + (targetScore - start) * progress);
+      scoreNum.textContent = currentVal;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        scoreNum.textContent = targetScore;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    hideError();
+
+    var fd = new FormData(form);
+    var firstName = (fd.get("firstName") || "").trim().toUpperCase();
+    var lastName = (fd.get("lastName") || "").trim().toUpperCase();
+    var gender = (fd.get("gender") || "").trim();
+    var phoneNumber = (fd.get("phoneNumber") || "").replace(/\D/g, "").slice(-10);
+    var panNumber = (fd.get("panNumber") || "").trim().toUpperCase();
+    var dateOfBirth = (fd.get("dateOfBirth") || "").trim();
+    var pincode = (fd.get("pincode") || "").replace(/\D/g, "").slice(0, 6);
+    var city = (fd.get("city") || "").trim();
+    var address = (fd.get("address") || "").trim();
+    var consent = form.querySelector("[name=consent]").checked;
+
+    // Client Validation
+    if (!firstName || firstName.length < 2) {
+      return showError("Please enter your First Name as per PAN card.");
+    }
+    if (!lastName) {
+      return showError("Please enter your Last Name as per PAN card.");
+    }
+    if (!gender) {
+      return showError("Please select your gender.");
+    }
+    if (!/^[6-9]\d{9}$/.test(phoneNumber)) {
+      return showError("Please enter a valid 10-digit mobile number.");
+    }
+    if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(panNumber)) {
+      return showError("Please enter a valid 10-character PAN (e.g. ABCDE1234F).");
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth)) {
+      return showError("Please enter your Date of Birth.");
+    }
+    if (!/^\d{6}$/.test(pincode)) {
+      return showError("Please enter a valid 6-digit PIN code.");
+    }
+    if (!address || address.length < 5) {
+      return showError("Please enter your complete residential address.");
+    }
+    if (!consent) {
+      return showError("Please provide consent to fetch your CIBIL report.");
+    }
+
+    // Switch to Loading View
+    formSection.style.display = "none";
+    loadingSection.style.display = "block";
+    loadingStep.textContent = "Connecting to Signzy Bureau Gateway...";
+
+    var stepTimer1 = setTimeout(function() {
+      loadingStep.textContent = "Verifying PAN & identity with CIBIL Bureau...";
+    }, 2000);
+
+    var stepTimer2 = setTimeout(function() {
+      loadingStep.textContent = "Generating official credit profile and summary...";
+    }, 4500);
+
+    var fullAddress = address + (city ? ", " + city : "");
+
+    try {
+      var res = await fetch("/api/cibil/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          gender: gender,
+          phoneNumber: phoneNumber,
+          panNumber: panNumber,
+          dateOfBirth: dateOfBirth,
+          pincode: pincode,
+          address: fullAddress,
+          consent: true
+        })
+      });
+
+      clearTimeout(stepTimer1);
+      clearTimeout(stepTimer2);
+
+      var data = await res.json().catch(function() { return {}; });
+
+      if (!res.ok || !data.success) {
+        loadingSection.style.display = "none";
+        formSection.style.display = "block";
+        return showError(data.error || "Unable to fetch CIBIL report. Please verify your details and try again.");
+      }
+
+      // Populate Result View
+      document.getElementById("csResultReportName").textContent = "Report for: " + (data.reportName || (firstName + " " + lastName));
+      document.getElementById("csResultCheckId").textContent = data.checkId || "";
+
+      // PDF Button
+      var pdfBox = document.getElementById("csPdfBox");
+      var pdfLink = document.getElementById("csPdfLink");
+      if (data.pdfUrl) {
+        pdfLink.href = data.pdfUrl;
+        pdfBox.style.display = "block";
+      } else {
+        pdfBox.style.display = "none";
+      }
+
+      // Account Summary
+      var acct = data.accountSummary || {};
+      document.getElementById("csStatTotalAccounts").textContent = acct.totalAccounts || 0;
+      document.getElementById("csStatOverdueAccounts").textContent = acct.overdueAccounts || 0;
+      document.getElementById("csStatCurrentBalance").textContent = formatCurrency(acct.currentBalance);
+      document.getElementById("csStatOverdueBalance").textContent = formatCurrency(acct.overdueBalance);
+      document.getElementById("csStatOldestDate").textContent = acct.oldestDateOpened || "N/A";
+
+      // Inquiry Summary
+      var inq = data.inquirySummary || {};
+      document.getElementById("csStatInq30").textContent = inq.inquiryPast30Days || 0;
+      document.getElementById("csStatInq12").textContent = inq.inquiryPast12Months || 0;
+      document.getElementById("csStatTotalInq").textContent = inq.totalInquiry || 0;
+
+      // Transition to Result Screen
+      loadingSection.style.display = "none";
+      resultSection.style.display = "block";
+
+      // Animate Score
+      animateScore(data.score, data.scoreBand, data.scoreBandColor);
+
+      if (window.lucide) window.lucide.createIcons();
+      resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    } catch (err) {
+      clearTimeout(stepTimer1);
+      clearTimeout(stepTimer2);
+      loadingSection.style.display = "none";
+      formSection.style.display = "block";
+      showError("Connection error while contacting CIBIL Bureau. Please check your internet connection and try again.");
+    }
+  });
+
+  if (checkAgainBtn) {
+    checkAgainBtn.addEventListener("click", function() {
+      resultSection.style.display = "none";
+      formSection.style.display = "block";
+      form.reset();
+      hideError();
+      formSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+})();
 </script>
 </body>
 </html>

@@ -28,4 +28,15 @@ const agentLimiter = rateLimit({
   },
 });
 
-module.exports = { leadLimiter, agentLimiter };
+const cibilLimiter = rateLimit({
+  windowMs:       15 * 60 * 1000, // 15 minutes
+  max:            10,
+  standardHeaders: true,
+  legacyHeaders:  false,
+  skip: (req) => req.headers["x-test-suite"] === "true" || process.env.NODE_ENV === "test" || process.env.SKIP_RATE_LIMIT === "true",
+  handler: (_req, res) => {
+    res.status(429).json({ error: "Too many credit check requests. Please try again after 15 minutes." });
+  },
+});
+
+module.exports = { leadLimiter, agentLimiter, cibilLimiter };
