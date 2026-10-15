@@ -356,9 +356,6 @@
      ============================================================ */
   var HI = {
     // ---- top strip / nav ----
-    "New here? Check your credit score in 10 seconds — it won't affect your score.": "\u0928\u092F\u093E \u0939\u0948\u0902? 10 \u0938\u0947\u0915\u0902\u0921 \u092E\u0947\u0902 \u0905\u092A\u0928\u093E \u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0938\u094D\u0915\u094B\u0930 \u091C\u093E\u0928\u0947\u0902 \u2014 \u0906\u092A\u0915\u093E \u0938\u094D\u0915\u094B\u0930 \u092A\u094D\u0930\u092D\u093E\u0935\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u094B\u0917\u093E",
-    "New here? Check your credit score in 10 seconds — it won't affect your credit score.": "\u0928\u092F\u093E \u0939\u0948\u0902? 10 \u0938\u0947\u0915\u0902\u0921 \u092E\u0947\u0902 \u0905\u092A\u0928\u093E \u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0938\u094D\u0915\u094B\u0930 \u091C\u093E\u0928\u0947\u0902 \u2014 \u0906\u092A\u0915\u093E \u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0938\u094D\u0915\u094B\u0930 \u092A\u094D\u0930\u092D\u093E\u0935\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u094B\u0917\u093E",
-    "New here? Check your eligibility in 10 seconds — it won't affect your credit score.": "\u0928\u092F\u093E \u0939\u0948\u0902? 10 \u0938\u0947\u0915\u0902\u0921 \u092E\u0947\u0902 \u0905\u092A\u0928\u0940 \u092A\u093E\u0924\u094D\u0930\u0924\u093E \u091C\u093E\u0928\u0947\u0902 \u2014 \u0906\u092A\u0915\u093E \u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0938\u094D\u0915\u094B\u0930 \u092A\u094D\u0930\u092D\u093E\u0935\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u094B\u0917\u093E",
     "New here? Check your eligibility in 10 seconds \u25C6 it won't affect your credit score.": "\u0928\u092F\u093E \u0939\u0948\u0902? 10 \u0938\u0947\u0915\u0902\u0921 \u092E\u0947\u0902 \u0905\u092A\u0928\u0940 \u092A\u093E\u0924\u094D\u0930\u0924\u093E \u091C\u093E\u0928\u0947\u0902 \u2014 \u0906\u092A\u0915\u093E \u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0938\u094D\u0915\u094B\u0930 \u092A\u094D\u0930\u092D\u093E\u0935\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u094B\u0917\u093E",
     "Check now": "\u0905\u092D\u0940 \u091C\u093E\u0902\u091A\u0947\u0902",
     "Loans": "\u0932\u094B\u0928", "Credit Cards": "\u0915\u094D\u0930\u0947\u0921\u093F\u091F \u0915\u093E\u0930\u094D\u0921", "Loans and Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Loans & Cards": "\u0932\u094B\u0928 \u0914\u0930 \u0915\u093E\u0930\u094D\u0921", "Insurance": "\u092C\u0940\u092E\u093E", "Investments": "\u0928\u093F\u0935\u0947\u0936", "Bookkeeping": "\u092C\u0941\u0915\u0915\u0940\u092A\u093F\u0902\u0917", "Finance & Accounting": "\u0935\u093F\u0924\u094D\u0924 \u0914\u0930 \u0932\u0947\u0916\u093E", "Finance and Accounting": "\u0935\u093F\u0924\u094D\u0924 \u0914\u0930 \u0932\u0947\u0916\u093E", "Tools": "\u091F\u0942\u0932\u094D\u0938",
@@ -617,8 +614,8 @@
   }
   function navHTML() {
     return '' +
-    '<div class="topstrip" onclick="if(!event.target.closest(\'a\')) window.location.href=\'' + BASE + 'tools/credit-score.html\';"><span data-i18n="top.msg">New here? Check your credit score in 10 seconds — it won\'t affect your score.</span>' +
-      '<a href="' + BASE + 'tools/credit-score.html" data-i18n="top.cta">Check now</a></div>' +
+    '<div class="topstrip"><span data-i18n="top.msg">New here? Check your eligibility in 10 seconds — it won\'t affect your credit score.</span>' +
+      '<a href="' + BASE + 'tools/eligibility.html" data-i18n="top.cta">Check now</a></div>' +
     '<header class="nav"><div class="nav-inner">' +
       '<a class="nav-logo cb-logo-link" href="' + BASE + 'index.html">' + logoLockup() + '</a>' +
       '<nav class="nav-links">' +

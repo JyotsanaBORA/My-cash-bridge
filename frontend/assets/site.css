@@ -104,11 +104,9 @@ h1,h2,h3 { letter-spacing: -.01em; margin: 0; }
    TOP STRIP + NAV
    ============================================================ */
 .topstrip { background: var(--ink); color: #fff; font-size: 13px;
-  display: flex; align-items: center; justify-content: center; gap: 14px; padding: 8px 16px; text-align: center; cursor: pointer; transition: background .15s ease; }
-.topstrip:hover { background: #152238; }
-.topstrip span { color: rgba(255,255,255,.9); }
-.topstrip a { color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; transition: color .15s ease; }
-.topstrip a:hover { color: var(--gold-light, #ffd57a); }
+  display: flex; align-items: center; justify-content: center; gap: 14px; padding: 8px 16px; text-align: center; }
+.topstrip span { color: rgba(255,255,255,.85); }
+.topstrip a { color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 
 .nav { position: sticky; top: 0; z-index: 60; background: var(--white); box-shadow: var(--shadow-nav); }
 .nav-inner { max-width: 1440px; margin: 0 auto; height: 72px; padding: 0 16px; display: flex; align-items: center; gap: 6px; box-sizing: border-box; width: 100%; }
