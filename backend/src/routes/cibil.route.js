@@ -52,7 +52,7 @@ function generateSimulatedCibilReport(payload) {
         }
       }
     },
-    CIBILPDF: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    CIBILPDF: null
   };
 }
 
@@ -214,7 +214,9 @@ async function handleCibilCheck(req, res) {
 
     const names = consumerCreditData.names || [];
     const reportName = names[0]?.name || `${firstName} ${lastName}`;
-    const pdfUrl = apiData.CIBILPDF || null;
+    const pdfUrl = apiData.CIBILPDF || apiData.cibilPdf || apiData.pdfUrl || apiData.reportPdf?.url || apiData.data?.CIBILPDF || cibilReport.CIBILPDF || null;
+
+    console.log(`[Signzy CIBIL] Report processed for: ${reportName}. Score: ${score} (${scoreBand}). Official Bureau PDF: ${pdfUrl ? 'Available (S3)' : 'None'}`);
 
     const summaryData = cibilReport.consumerSummaryData || {};
     const accountSummary = summaryData.accountSummary || {};
