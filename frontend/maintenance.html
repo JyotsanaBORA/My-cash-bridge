@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>Under Maintenance &ndash; MyCashBridge</title>
+  <meta name="description" content="MyCashBridge is currently undergoing scheduled system upgrades. We will be back online shortly with faster loan approvals and enhanced features." />
+  <link rel="icon" href="assets/logo-cashbridge-mark.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand-lime: #9AEF5E;
+      --lime-soft: #c8f7a8;
+      --green-primary: #0a5e3a;
+      --green-accent: #0c7a4e;
+      --green-deep: #073d28;
+      --green-house: #e0fced;
+      --aqua-deep: #bff0db;
+      --gold: #cba258;
+      --gold-light: #faf6ee;
+      --canvas: #f6f5f1;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text-strong: rgba(0, 0, 0, 0.88);
+      --text-soft: rgba(0, 0, 0, 0.60);
+      --text-muted: rgba(0, 0, 0, 0.42);
+      --border-light: rgba(10, 94, 58, 0.12);
+      --shadow-elevation: 0 20px 48px -12px rgba(10, 94, 58, 0.12), 0 8px 24px -8px rgba(0, 0, 0, 0.06);
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--canvas);
+      color: var(--text-strong);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Background Effects */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.65;
+      animation: floatAura 18s ease-in-out infinite alternate;
+    }
+
+    .blob-1 {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, #9AEF5E 0%, rgba(154, 239, 94, 0) 70%);
+      top: -120px;
+      left: -100px;
+    }
+
+    .blob-2 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #e0fced 0%, rgba(224, 252, 237, 0) 70%);
+      bottom: -150px;
+      right: -100px;
+      animation-duration: 22s;
+      animation-delay: -5s;
+    }
+
+    .blob-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(203, 162, 88, 0.22) 0%, rgba(203, 162, 88, 0) 70%);
+      top: 40%;
+      left: 55%;
+      animation-duration: 15s;
+    }
+
+    /* Subtle Grid Overlay */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(10, 94, 58, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(10, 94, 58, 0.035) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 42px;
+      width: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover .logo-img {
+      transform: scale(1.02);
+    }
+
+    .badge-secure {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      background: rgba(10, 94, 58, 0.08);
+      border: 1px solid rgba(10, 94, 58, 0.16);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--green-primary);
+    }
+
+    .badge-secure svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1.25rem 3rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-light);
+      border-radius: 28px;
+      box-shadow: var(--shadow-elevation);
+      max-width: 860px;
+      width: 100%;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--green-primary), var(--brand-lime), var(--gold), var(--green-accent));
+      background-size: 300% 100%;
+      animation: gradientShift 6s ease infinite;
+    }
+
+    /* Live Pulse Status */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(154, 239, 94, 0.22);
+      border: 1px solid rgba(10, 94, 58, 0.2);
+      color: var(--green-deep);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.45rem 1.15rem;
+      border-radius: 9999px;
+      margin-bottom: 2rem;
+    }
+
+    .status-dot-wrap {
+      position: relative;
+      width: 10px;
+      height: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background-color: #0c7a4e;
+      border-radius: 50%;
+    }
+
+    .status-ping {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--brand-lime);
+      animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+      opacity: 0.75;
+    }
+
+    /* Mascot & Animated Centerpiece */
+    .hero-visual {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      margin: 0 auto 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 2px dashed rgba(10, 94, 58, 0.22);
+      animation: spin 30s linear infinite;
+    }
+
+    .orbit-ring-outer {
+      position: absolute;
+      inset: -32px;
+      border-radius: 50%;
+      border: 1px solid rgba(154, 239, 94, 0.45);
+      animation: spinReverse 40s linear infinite;
+    }
+
+    .glow-disc {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(154, 239, 94, 0.4) 0%, rgba(224, 252, 237, 0.8) 60%, rgba(255, 255, 255, 0) 100%);
+      animation: pulseGlow 4s ease-in-out infinite alternate;
+    }
+
+    .mascot-art {
+      width: 160px;
+      height: 180px;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      animation: floatGentle 5s ease-in-out infinite alternate;
+      filter: drop-shadow(0 14px 20px rgba(10, 94, 58, 0.16));
+    }
+
+    /* Floating Badges */
+    .floating-chip {
+      position: absolute;
+      z-index: 3;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      padding: 0.45rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-primary);
+      white-space: nowrap;
+    }
+
+    .chip-left {
+      top: 15%;
+      left: -20px;
+      animation: floatLeft 6s ease-in-out infinite alternate;
+    }
+
+    .chip-right {
+      bottom: 20%;
+      right: -25px;
+      animation: floatRight 5.5s ease-in-out infinite alternate;
+    }
+
+    .chip-icon {
+      font-size: 1rem;
+    }
+
+    /* Headings & Text */
+    h1 {
+      font-size: clamp(1.85rem, 4vw, 2.65rem);
+      font-weight: 800;
+      color: var(--green-deep);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.025em;
+    }
+
+    h1 span.highlight {
+      background: linear-gradient(120deg, var(--green-primary), var(--green-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .description {
+      font-size: clamp(0.98rem, 1.8vw, 1.15rem);
+      color: var(--text-soft);
+      max-width: 640px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.65;
+    }
+
+    /* Progress Stage Checklist */
+    .stages-container {
+      background: var(--canvas);
+      border-radius: 20px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid rgba(10, 94, 58, 0.08);
+    }
+
+    .stages-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--green-primary);
+      margin-bottom: 1rem;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: left;
+    }
+
+    .stage-item {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(10, 94, 58, 0.08);
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .stage-item.completed {
+      border-color: rgba(12, 122, 78, 0.3);
+      background: linear-gradient(180deg, #ffffff 0%, #f4faf6 100%);
+    }
+
+    .stage-item.active {
+      border-color: var(--brand-lime);
+      box-shadow: 0 0 0 2px rgba(154, 239, 94, 0.35);
+      background: #ffffff;
+    }
+
+    .stage-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .stage-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .stage-item.completed .stage-icon {
+      background: var(--green-house);
+      color: var(--green-primary);
+    }
+
+    .stage-item.active .stage-icon {
+      background: var(--brand-lime);
+      color: var(--green-deep);
+      animation: pulse 1.6s infinite;
+    }
+
+    .stage-item.pending .stage-icon {
+      background: #edebe9;
+      color: var(--text-muted);
+    }
+
+    .stage-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stage-item.completed .stage-label {
+      color: var(--green-accent);
+    }
+
+    .stage-item.active .stage-label {
+      color: var(--green-deep);
+    }
+
+    .stage-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-strong);
+      line-height: 1.3;
+    }
+
+    /* Notify Form */
+    .notify-section {
+      max-width: 520px;
+      margin: 0 auto 2.2rem;
+    }
+
+    .notify-label {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-strong);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .notify-form {
+      display: flex;
+      gap: 0.6rem;
+      position: relative;
+    }
+
+    .notify-input {
+      flex: 1;
+      padding: 0.85rem 1.25rem;
+      border-radius: 9999px;
+      border: 1.5px solid var(--border-light);
+      background: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--text-strong);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .notify-input:focus {
+      border-color: var(--green-accent);
+      box-shadow: 0 0 0 3px rgba(12, 122, 78, 0.15);
+    }
+
+    .notify-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .notify-btn {
+      padding: 0.85rem 1.6rem;
+      border-radius: 9999px;
+      border: none;
+      background: var(--green-primary);
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(10, 94, 58, 0.25);
+    }
+
+    .notify-btn:hover {
+      background: var(--green-deep);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(10, 94, 58, 0.32);
+    }
+
+    .notify-btn:active {
+      transform: translateY(0);
+    }
+
+    .notify-success {
+      display: none;
+      background: var(--green-house);
+      border: 1px solid var(--aqua-deep);
+      color: var(--green-deep);
+      border-radius: 14px;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      animation: fadeIn 0.4s ease;
+    }
+
+    /* Support & Help Contact */
+    .support-block {
+      border-top: 1px solid rgba(10, 94, 58, 0.1);
+      padding-top: 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .support-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--green-primary);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      background: rgba(10, 94, 58, 0.06);
+      transition: all 0.2s ease;
+    }
+
+    .support-link:hover {
+      background: var(--green-primary);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 1.5rem 2rem 2.5rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .footer-admin-hint {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(0, 0, 0, 0.3);
+    }
+
+    .footer-admin-hint a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    /* Keyframe Animations */
+    @keyframes floatAura {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes ping {
+      0% { transform: scale(1); opacity: 0.8; }
+      80%, 100% { transform: scale(2.4); opacity: 0; }
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(0.92); opacity: 0.55; }
+      100% { transform: scale(1.1); opacity: 0.85; }
+    }
+
+    @keyframes floatGentle {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    @keyframes floatLeft {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-8px) rotate(-2deg); }
+    }
+
+    @keyframes floatRight {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(8px) rotate(2deg); }
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes spinReverse {
+      100% { transform: rotate(-360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 1.25rem 1rem;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .card {
+        padding: 2.2rem 1.4rem;
+        border-radius: 22px;
+      }
+      .stages-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      .chip-left {
+        left: -8px;
+        top: 8%;
+      }
+      .chip-right {
+        right: -8px;
+        bottom: 12%;
+      }
+      .notify-form {
+        flex-direction: column;
+      }
+      .notify-btn {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Ambient Backdrops -->
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- Top Header with Brand Logo -->
+  <header>
+    <a href="/" class="logo-container" title="MyCashBridge">
+      <img src="assets/logo-cashbridge.svg" alt="MyCashBridge Logo" class="logo-img" />
+    </a>
+    <div class="badge-secure">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+      <span>RBI-Aligned &bull; 256-Bit SSL Protected</span>
+    </div>
+  </header>
+
+  <!-- Central Card -->
+  <main>
+    <div class="card">
+      <!-- Live Status Pill -->
+      <div class="status-pill">
+        <div class="status-dot-wrap">
+          <div class="status-ping"></div>
+          <div class="status-dot"></div>
+        </div>
+        <span>System Upgrade in Progress</span>
+      </div>
+
+      <!-- Animated Mascot Visual Stage -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit-ring-outer"></div>
+        <div class="orbit-ring"></div>
+        <div class="glow-disc"></div>
+
+        <!-- Floating interactive chips -->
+        <div class="floating-chip chip-left">
+          <span class="chip-icon">&#x20B9;</span>
+          <span>Best Loan Rates</span>
+        </div>
+        <div class="floating-chip chip-right">
+          <span class="chip-icon">&#9889;</span>
+          <span>Instant Speed</span>
+        </div>
+
+        <!-- Setu the Mascot -->
+        <img src="assets/setu/setu-think.svg" alt="Setu Mascot Upgrading Systems" class="mascot-art" />
+      </div>
+
+      <!-- Main Headline -->
+      <h1>We&rsquo;re Upgrading <span class="highlight">MyCashBridge</span> For You</h1>
+      <p class="description">
+        We are currently tuning our financial engines, security safeguards, and lending networks to give you even faster approvals, honest EMIs, and a seamless borrowing journey.
+      </p>
+
+      <!-- Live Upgrade Stages -->
+      <div class="stages-container">
+        <div class="stages-title">
+          <span>Upgrade Milestone Tracker</span>
+          <span style="font-weight:600; text-transform:none; color:var(--text-soft);">Status: Optimizing</span>
+        </div>
+        <div class="stages-grid">
+          <div class="stage-item completed">
+            <div class="stage-header">
+              <div class="stage-icon">&check;</div>
+              <span class="stage-label">Step 1 &bull; Done</span>
+            </div>
+            <div class="stage-name">Core Security &amp; Database Hardening</div>
+          </div>
+          <div class="stage-item active">
+            <div class="stage-header">
+              <div class="stage-icon">&#9889;</div>
+              <span class="stage-label">Step 2 &bull; Active</span>
+            </div>
+            <div class="stage-name">Loan Matching &amp; Speed Enhancements</div>
+          </div>
+          <div class="stage-item pending">
+            <div class="stage-header">
+              <div class="stage-icon">&#8987;</div>
+              <span class="stage-label">Step 3 &bull; Final</span>
+            </div>
+            <div class="stage-name">System Verification &amp; Service Launch</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notify Me Form -->
+      <div class="notify-section">
+        <label for="notifyEmail" class="notify-label">Be the first to know the moment we are back live:</label>
+        <form class="notify-form" id="notifyForm" onsubmit="handleNotifySubmit(event)">
+          <input 
+            type="email" 
+            id="notifyEmail" 
+            class="notify-input" 
+            placeholder="Enter your email address" 
+            required 
+            autocomplete="email" 
+          />
+          <button type="submit" class="notify-btn" id="notifyBtn">
+            <span>Notify Me</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </form>
+        <div class="notify-success" id="notifySuccess">
+          &#10004; Thank you! You will receive an instant notification when services resume.
+        </div>
+      </div>
+
+      <!-- Support / Emergency Assistance -->
+      <div class="support-block">
+        <span>Have an urgent question regarding an existing loan or enquiry?</span>
+        <a href="mailto:support@mycashbridge.in" class="support-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span>Email Support Team</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 MyCashBridge &bull; Reddington Global Consultancy Private Limited. All rights reserved.</p>
+    <div class="footer-admin-hint">
+      <!-- Admin bypass hint -->
+      Internal Team: <a href="/?preview=fullsite">Preview Live Site</a>
+    </div>
+  </footer>
+
+  <script>
+    function handleNotifySubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('notifyEmail');
+      const val = input.value.trim();
+      if (!val || !val.includes('@')) return;
+
+      try {
+        const saved = JSON.parse(localStorage.getItem('mcb_notify_emails') || '[]');
+        if (!saved.includes(val)) {
+          saved.push(val);
+          localStorage.setItem('mcb_notify_emails', JSON.stringify(saved));
+        }
+      } catch (err) {
+        // LocalStorage fallback
+      }
+
+      document.getElementById('notifyForm').style.display = 'none';
+      document.getElementById('notifySuccess').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
+

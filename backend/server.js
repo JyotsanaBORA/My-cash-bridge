@@ -191,10 +191,50 @@ app.get("/:loanShort([a-zA-Z0-9-]+)", (req, res, next) => {
   next();
 });
 
+// ── Maintenance Mode Middleware ──────────────────────────────
+const FRONTEND_DIR = path.resolve(__dirname, "..", "frontend");
+const isMaintenanceMode = process.env.MAINTENANCE_MODE !== "false";
+const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY || "fullsite";
+
+app.use((req, res, next) => {
+  // Clear preview cookie if requested
+  if (req.query.preview === "off") {
+    res.setHeader("Set-Cookie", "mcb_preview=; Path=/; Max-Age=0");
+  }
+
+  // Allow static assets, health check, and API endpoints
+  const isStaticOrApi = 
+    req.path.startsWith("/api") ||
+    req.path.startsWith("/assets") ||
+    req.path === "/health" ||
+    /\.(css|js|png|jpg|jpeg|svg|ico|webp|woff2?|json)$/i.test(req.path);
+
+  if (isStaticOrApi) {
+    return next();
+  }
+
+  // Admin bypass via query param ?preview=fullsite or cookie
+  const cookieHeader = req.headers.cookie || "";
+  const hasPreviewCookie = cookieHeader.includes(`mcb_preview=${BYPASS_KEY}`);
+  if (req.query.preview === BYPASS_KEY) {
+    res.setHeader("Set-Cookie", `mcb_preview=${BYPASS_KEY}; Path=/; HttpOnly; SameSite=Lax`);
+    return next();
+  }
+  if (hasPreviewCookie && req.query.preview !== "off") {
+    return next();
+  }
+
+  if (isMaintenanceMode) {
+    res.status(503);
+    res.setHeader("Retry-After", "3600");
+    return res.sendFile(path.join(FRONTEND_DIR, "maintenance.html"));
+  }
+
+  next();
+});
+
 // ── Serve Frontend ───────────────────────────────────────────
 // The Express server serves the entire frontend/ folder as static files.
-// This means one "npm start" runs both the site AND the API — no CORS issues.
-const FRONTEND_DIR = path.resolve(__dirname, "..", "frontend");
 app.use(express.static(FRONTEND_DIR, {
   extensions: ["html"],
   setHeaders(res, filePath) {
